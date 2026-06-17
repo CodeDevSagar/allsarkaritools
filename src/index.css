@@ -1,0 +1,135 @@
+@import "tailwindcss";
+@import './styles/animations.css';
+
+@theme {
+  --color-primary: #00f2ff;
+  --color-secondary: #7000ff;
+  --color-accent: #ff00c8;
+  --color-dark: #050505;
+  --color-glass: rgba(15, 15, 20, 0.7);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  body {
+    @apply bg-[#080415] text-white font-sans selection:bg-primary selection:text-black;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(112, 0, 255, 0.16) 0px, transparent 60%),
+      radial-gradient(at 100% 0%, rgba(0, 242, 255, 0.16) 0px, transparent 60%),
+      radial-gradient(at 50% 100%, rgba(255, 0, 200, 0.1) 0px, transparent 60%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .glass-card, .ant-card.glass-card {
+    background: linear-gradient(180deg, #1b0e36 0%, #0a0518 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 2rem !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+    transition: all 0.5s ease-in-out !important;
+  }
+  
+  .glass-card:hover, .ant-card.glass-card:hover {
+    border-color: rgba(0, 242, 255, 0.3) !important;
+    box-shadow: 0 20px 60px rgba(0, 242, 255, 0.15) !important;
+  }
+
+  .neon-button {
+    @apply relative overflow-hidden transition-all duration-300 px-8 py-3 rounded-2xl font-bold flex items-center justify-center gap-2;
+    background: linear-gradient(135deg, #00f2ff, #7000ff);
+    box-shadow: 0 10px 20px -5px rgba(0, 242, 255, 0.5);
+    color: #000;
+  }
+  
+  .neon-button:hover {
+    @apply scale-[1.02];
+    box-shadow: 0 15px 30px -5px rgba(0, 242, 255, 0.7);
+  }
+
+  .neon-button:active {
+    @apply scale-[0.98];
+  }
+
+  .nav-glass {
+    @apply fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl z-[1000] backdrop-blur-2xl rounded-3xl h-16 px-6 flex items-center justify-between shadow-2xl transition-all duration-500;
+    background: rgba(13, 7, 34, 0.8) !important;
+    border: 1px solid rgba(0, 242, 255, 0.15) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 255, 0.05) !important;
+  }
+
+  .hero-glow {
+    @apply absolute w-[600px] h-[600px] rounded-full blur-[150px] opacity-20 pointer-events-none;
+  }
+
+  /* Ant Design Overrides */
+  .ant-tabs-nav::before {
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  }
+  
+  .ant-card-head {
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  }
+
+  .ant-input, .ant-input-number, .ant-select-selector, .ant-picker {
+    @apply !bg-[#0c0721]/80 !border-white/10 !text-white !rounded-xl !transition-all !duration-300 !h-12;
+  }
+
+  .ant-input:focus, .ant-select-selector:focus {
+    @apply !border-primary/50 !shadow-[0_0_10px_rgba(0,242,255,0.2)];
+  }
+}
+
+/* Page content color overrides (excluding nav & footer) */
+main h1, main .ant-typography h1, main .ant-typography-title-1 {
+  background: linear-gradient(135deg, #ff3b7e 0%, #ff8c2b 50%, #00f2ff 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  display: inline-block;
+}
+
+main h2, main .ant-typography h2, main .ant-typography-title-2 {
+  color: #ff3b7e !important;
+}
+
+main h3, main .ant-typography h3, main .ant-typography-title-3 {
+  color: #00f2ff !important;
+}
+
+main label, main .ant-form-item-label label, main .ant-form-item label {
+  color: #ff8c2b !important;
+}
+
+main p, main .ant-typography p, main .text-gray-400, main .text-gray-500 {
+  color: #cbd5e1 !important;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Responsive Title Scaling */
+.responsive-title {
+  @apply text-3xl sm:text-5xl md:text-6xl !font-black tracking-tighter;
+}
+
+/* Touch Device Optimizations */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 1.5rem !important;
+    border-radius: 2rem !important;
+  }
+  
+  .neon-button {
+    height: 3.5rem !important;
+    font-size: 0.9rem !important;
+  }
+}
