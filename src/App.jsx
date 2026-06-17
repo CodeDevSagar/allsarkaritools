@@ -28,6 +28,7 @@ import PdfPageNumber from './pages/tools/PdfPageNumber';
 import PdfEdit from './pages/tools/PdfEdit';
 import PdfCrop from './pages/tools/PdfCrop';
 import SalarySlabs from './pages/tools/SalarySlabs';
+import AboutUs from './pages/AboutUs';
 
 // Legal Pages
 import PrivacyPolicy from './pages/legal/PrivacyPolicy';
@@ -82,6 +83,7 @@ const App = () => {
                 <Route path="/salary-slabs" element={<SalarySlabs />} />
                 
                 {/* Legal Routes */}
+                <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-of-use" element={<TermsOfUse />} />
                 <Route path="/contact-us" element={<ContactUs />} />

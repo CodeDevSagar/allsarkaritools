@@ -12,10 +12,10 @@ const ResumeBuilder = () => {
   const [template, setTemplate] = useState('modern');
   const [sections, setSections] = useState({
     personal: {
-      fullName: 'Your Name',
-      email: 'email@example.com',
-      phone: '+91 98765 43210',
-      location: 'City, State, Country',
+      fullName: 'Sagar Kumar',
+      email: 'sagarmandal358@gmail.com',
+      phone: '+91 9304480813',
+      location: 'Bhagalpur, Bihar, India',
       summary: 'Highly motivated professional with strong technical skills...'
     },
     experience: [

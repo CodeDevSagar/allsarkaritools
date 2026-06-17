@@ -64,21 +64,10 @@ const FormHelper = () => {
   const [activeCategory, setActiveCategory] = useState('All');
 
   const portals = [
-    { name: 'SSC (Staff Selection Commission)', url: 'https://ssc.gov.in/', category: 'Central Govt', desc: 'CHSL, CGL, MTS, JE and Stenographer forms.' },
-    { name: 'UPSC (Union Public Service Commission)', url: 'https://upsc.gov.in/', category: 'Central Govt', desc: 'IAS, IPS, NDA, CDS and IES applications.' },
-    { name: 'IBPS (Banking Personnel)', url: 'https://ibps.in/', category: 'Banking', desc: 'PO, Clerk and SO recruitment for PSUs.' },
-    { name: 'RRB (Railway Recruitment)', url: 'https://indianrailways.gov.in/', category: 'Railways', desc: 'NTPC, Group D and ALP notifications.' },
-    { name: 'National Scholarship Portal', url: 'https://scholarships.gov.in/', category: 'Scholarship', desc: 'All state and central scholarships for students.' },
-    { name: 'NTA (Exam Agency)', url: 'https://nta.ac.in/', category: 'Education', desc: 'JEE, NEET, UGC NET and CUET registrations.' },
-    { name: 'Aadhaar (UIDAI)', url: 'https://uidai.gov.in/', category: 'ID Services', desc: 'Update Aadhaar for government form verification.' },
-    { name: 'PAN Card (NSDL)', url: 'https://tinpan.proteantech.in/', category: 'ID Services', desc: 'Apply for PAN card required for exams.' },
-    { name: 'UPSSSC (Uttar Pradesh Subordinate Services)', url: 'https://upsssc.gov.in/', category: 'State Govt', desc: 'UP state government job applications.' },
-    { name: 'UPPSC (Uttar Pradesh Public Service)', url: 'https://uppsc.up.nic.in/', category: 'State Govt', desc: 'UP PCS, Lower PCS and other state services.' },
-    { name: 'BPSC (Bihar Public Service)', url: 'https://bpsc.bihar.gov.in/', category: 'State Govt', desc: 'BPSC administrative and judicial service applications.' },
     { name: 'CodeEducationHub Portal', url: 'https://codeeducationhub.com/', category: 'Education', desc: 'Explore online classes, test series, and study materials.' }
   ];
 
-  const categories = ['All', 'Central Govt', 'State Govt', 'Education', 'Banking', 'ID Services', 'Scholarship'];
+  const categories = ['All', 'Education'];
 
   const filteredPortals = portals.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -193,23 +182,7 @@ const FormHelper = () => {
           </Row>
         </motion.div>
 
-        {/* Safety & Verification Banner */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-20 p-8 md:p-10 bg-gradient-to-r from-[#1b103c]/80 to-[#0c0721]/90 border border-[#7000ff]/20 rounded-[2.5rem] flex flex-col md:flex-row items-center gap-8 backdrop-blur-md"
-        >
-          <div className="w-16 h-16 bg-[#ff007f]/10 border border-[#ff007f]/20 rounded-2xl flex items-center justify-center shrink-0">
-            <Shield size={32} className="text-[#ff5e36]" />
-          </div>
-          <div className="text-left">
-            <Title level={5} className="!text-white !mb-2 uppercase tracking-wider text-xs font-black">Security Verification</Title>
-            <Paragraph className="!text-gray-400 !m-0 text-sm md:text-base font-medium leading-relaxed">
-              Always double-check that the URL ends with <span className="text-[#ff5e36] font-bold">.gov.in</span> or <span className="text-[#ff5e36] font-bold">.nic.in</span> in your browser search bar before typing any password or submitting identity details. We only catalog official, verified government resources.
-            </Paragraph>
-          </div>
-        </motion.div>
+        
       </div>
     </div>
   );

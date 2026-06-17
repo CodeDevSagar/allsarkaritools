@@ -16,6 +16,7 @@ const Footer = () => {
   ];
 
   const supportLinks = [
+    { name: 'About Us', path: '/about-us' },
     { name: 'Privacy Policy', path: '/privacy-policy' },
     { name: 'Terms of Use', path: '/terms-of-use' },
     { name: 'Contact Us', path: '/contact-us' },

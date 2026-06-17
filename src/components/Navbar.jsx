@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Drawer } from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Home, Wrench, FileText, Menu as MenuIcon, X, Landmark } from 'lucide-react';
+import { Home, Wrench, FileText, Menu as MenuIcon, X, Landmark, Info, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedLogo from './AnimatedLogo';
 
@@ -30,7 +30,7 @@ const Navbar = () => {
     { label: 'Home', path: '/', icon: <Home size={18} /> },
     { label: 'Tools', path: '/tools', icon: <Wrench size={18} /> },
     { label: 'Resume', path: '/resume-builder', icon: <FileText size={18} /> },
-    { label: 'Government job', path: '/form-helper', icon: <Landmark size={18} />},
+    { label: 'Education', path: '/form-helper', icon: <BookOpen size={18} />},
   ];
 
   return (

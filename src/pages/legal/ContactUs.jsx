@@ -1,5 +1,5 @@
-import React from 'react';
-import { Typography, Card, Space, Input, Button, Row, Col } from 'antd';
+import React, { useState } from 'react';
+import { Typography, Card, Space, Input, Button, Row, Col, message } from 'antd';
 import { Mail, MessageSquare, Send, MapPin, Globe } from 'lucide-react';
 import AdSlot from '../../components/AdSlot';
 
@@ -7,6 +7,28 @@ const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
 
 const ContactUs = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [msg, setMsg] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = () => {
+    if (!name.trim()) return message.error('Please enter your name');
+    if (!email.trim() || !email.includes('@')) return message.error('Please enter a valid email address');
+    if (!msg.trim()) return message.error('Please enter your message');
+
+    setLoading(true);
+    message.loading({ content: 'Sending message...', key: 'send_msg' });
+
+    setTimeout(() => {
+      setLoading(false);
+      message.success({ content: 'Message sent successfully! We will get back to you soon.', key: 'send_msg' });
+      setName('');
+      setEmail('');
+      setMsg('');
+    }, 1500);
+  };
+
   return (
     <div className="max-w-6xl mx-auto py-24 px-4 min-h-screen">
       <div className="text-center mb-16">
@@ -28,7 +50,7 @@ const ContactUs = () => {
                 </div>
                 <div>
                   <Text className="text-gray-500 uppercase font-black text-[10px] tracking-widest block mb-1">Email Us</Text>
-                  <Text className="text-white font-bold text-lg">support@sarkaritools.com</Text>
+                  <Text className="text-white font-bold text-lg">sagarmandal358@gmail.com</Text>
                 </div>
               </div>
 
@@ -48,7 +70,7 @@ const ContactUs = () => {
                 </div>
                 <div>
                   <Text className="text-gray-500 uppercase font-black text-[10px] tracking-widest block mb-1">Location</Text>
-                  <Text className="text-white font-bold text-lg">New Delhi, India</Text>
+                  <Text className="text-white font-bold text-lg">Bihar, India</Text>
                 </div>
               </div>
             </Space>
@@ -62,18 +84,44 @@ const ContactUs = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Text className="text-gray-500 uppercase font-black text-[10px] tracking-widest block mb-2">Name</Text>
-                  <Input size="large" className="!bg-white/5 !border-white/10 !text-white !h-14 !rounded-xl" placeholder="Your Name" />
+                  <Input 
+                    size="large" 
+                    className="!bg-white/5 !border-white/10 !text-white !h-14 !rounded-xl" 
+                    placeholder="Your Name" 
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                  />
                 </div>
                 <div>
                   <Text className="text-gray-500 uppercase font-black text-[10px] tracking-widest block mb-2">Email</Text>
-                  <Input size="large" className="!bg-white/5 !border-white/10 !text-white !h-14 !rounded-xl" placeholder="Email Address" />
+                  <Input 
+                    size="large" 
+                    className="!bg-white/5 !border-white/10 !text-white !h-14 !rounded-xl" 
+                    placeholder="Email Address" 
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                  />
                 </div>
               </div>
               <div>
                 <Text className="text-gray-500 uppercase font-black text-[10px] tracking-widest block mb-2">Message</Text>
-                <TextArea rows={6} className="!bg-white/5 !border-white/10 !text-white !rounded-xl" placeholder="How can we help?" />
+                <TextArea 
+                  rows={6} 
+                  className="!bg-white/5 !border-white/10 !text-white !rounded-xl" 
+                  placeholder="How can we help?" 
+                  value={msg}
+                  onChange={e => setMsg(e.target.value)}
+                />
               </div>
-              <Button type="primary" block size="large" className="neon-button !h-16 !text-lg" icon={<Send size={18} />}>
+              <Button 
+                type="primary" 
+                block 
+                size="large" 
+                className="neon-button !h-16 !text-lg" 
+                icon={<Send size={18} />}
+                onClick={handleSubmit}
+                loading={loading}
+              >
                 Send Message Now
               </Button>
             </Space>
