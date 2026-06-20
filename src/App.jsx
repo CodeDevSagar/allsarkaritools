@@ -31,6 +31,12 @@ import SalarySlabs from './pages/tools/SalarySlabs';
 import VideoToPdf from './pages/tools/VideoToPdf';
 import AboutUs from './pages/AboutUs';
 
+// New Dispatchers
+import YoutubeTool from './pages/tools/YoutubeTool';
+import DevTool from './pages/tools/DevTool';
+import UtilTool from './pages/tools/UtilTool';
+
+
 // Legal Pages
 import PrivacyPolicy from './pages/legal/PrivacyPolicy';
 import TermsOfUse from './pages/legal/TermsOfUse';
@@ -83,6 +89,32 @@ const App = () => {
                 <Route path="/pdf-crop" element={<PdfCrop />} />
                 <Route path="/salary-slabs" element={<SalarySlabs />} />
                 <Route path="/video-to-pdf" element={<VideoToPdf />} />
+                
+                {/* YouTube Tools */}
+                <Route path="/youtube-title" element={<YoutubeTool type="title" />} />
+                <Route path="/youtube-description" element={<YoutubeTool type="description" />} />
+                <Route path="/youtube-thumbnail" element={<YoutubeTool type="thumbnail" />} />
+                <Route path="/youtube-keyword" element={<YoutubeTool type="keyword" />} />
+                <Route path="/youtube-tags" element={<YoutubeTool type="tags" />} />
+                <Route path="/youtube-hash" element={<YoutubeTool type="hash" />} />
+
+                {/* Developer Tools */}
+                <Route path="/json-formatter" element={<DevTool type="json" />} />
+                <Route path="/html-formatter" element={<DevTool type="html" />} />
+                <Route path="/xml-formatter" element={<DevTool type="xml" />} />
+                <Route path="/css-minifier" element={<DevTool type="css-minify" />} />
+                <Route path="/css-beautifier" element={<DevTool type="css-beautify" />} />
+                <Route path="/meta-tag-generator" element={<DevTool type="meta" />} />
+
+                {/* General Utilities */}
+                <Route path="/password-generator" element={<UtilTool type="password" />} />
+                <Route path="/word-counter" element={<UtilTool type="counter" />} />
+                <Route path="/remove-duplicate-lines" element={<UtilTool type="duplicates" />} />
+                <Route path="/currency-converter" element={<UtilTool type="currency" />} />
+                <Route path="/lorem-ipsum" element={<UtilTool type="lorem" />} />
+                <Route path="/qr-generator" element={<UtilTool type="qrcode" />} />
+                <Route path="/color-picker" element={<UtilTool type="color" />} />
+
                 
                 {/* Legal Routes */}
                 <Route path="/about-us" element={<AboutUs />} />

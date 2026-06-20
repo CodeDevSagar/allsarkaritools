@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Typography, Input, Tag } from 'antd';
-import { Camera, FileSignature, Image as ImageIcon, FileType, Calculator, Search, Zap, Info, FileImage, Landmark, FileSpreadsheet, ArrowRightLeft, Lock, Minimize, Wand2, Keyboard, Shield, Target, Bot, RotateCw, Globe, Hash, Edit3, Crop, Copyright, Video } from 'lucide-react';
+import { Camera, FileSignature, Image as ImageIcon, FileType, Calculator, Search, Zap, Info, FileImage, Landmark, FileSpreadsheet, ArrowRightLeft, Lock, Minimize, Wand2, Keyboard, Shield, Target, Bot, RotateCw, Globe, Hash, Edit3, Crop, Copyright, Video, Code } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import AdSlot from '../components/AdSlot';
@@ -69,6 +69,31 @@ const AllTools = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   
   const tools = [
+    // YouTube SEO Tools
+    { title: 'YouTube Title Generator', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Generate engaging and high-CTR video title ideas', link: '/youtube-title', category: 'AI Tools', featured: true },
+    { title: 'YouTube Description Generator', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Generate structured SEO description templates', link: '/youtube-description', category: 'AI Tools' },
+    { title: 'YouTube Thumbnail Downloader', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Download high-quality video thumbnail images', link: '/youtube-thumbnail', category: 'AI Tools' },
+    { title: 'YouTube Keyword Generator', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Find SEO optimized tags and search keywords', link: '/youtube-keyword', category: 'AI Tools' },
+    { title: 'YouTube Tags Extractor', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Extract metadata tags from any public video', link: '/youtube-tags', category: 'AI Tools' },
+    { title: 'YouTube Hash Generator', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Create trending hashtag bundles for your video', link: '/youtube-hash', category: 'AI Tools' },
+
+    // Developer & Formatters
+    { title: 'JSON Formatter & Validator', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Parse, validate and pretty-print JSON trees', link: '/json-formatter', category: 'Documents', featured: true },
+    { title: 'HTML Formatter', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Format and beautify HTML document markup', link: '/html-formatter', category: 'Documents' },
+    { title: 'XML Formatter', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Format and beautify XML data structures', link: '/xml-formatter', category: 'Documents' },
+    { title: 'CSS Minifier', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Compress stylesheets by stripping extra whitespace', link: '/css-minifier', category: 'Documents' },
+    { title: 'CSS Beautifier', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Format CSS codes with customizable indents', link: '/css-beautifier', category: 'Documents' },
+    { title: 'Meta Tag Generator', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Create standard HTML/OG meta headers for websites', link: '/meta-tag-generator', category: 'Documents' },
+
+    // General Utilities
+    { title: 'Password Generator', icon: <Lock size={32} className="text-[#ff8c2b]" />, desc: 'Generate secure cryptographic passwords locally', link: '/password-generator', category: 'Calculators' },
+    { title: 'Word Counter', icon: <FileImage size={32} className="text-[#ff8c2b]" />, desc: 'Analyze text statistics, words, and characters', link: '/word-counter', category: 'Calculators' },
+    { title: 'Remove Duplicate Lines', icon: <Wand2 size={32} className="text-[#ff8c2b]" />, desc: 'Clean lists by removing duplicate text lines', link: '/remove-duplicate-lines', category: 'Calculators' },
+    { title: 'Currency Converter', icon: <Landmark size={32} className="text-[#ff8c2b]" />, desc: 'Simulated currency rate conversion tools', link: '/currency-converter', category: 'Calculators' },
+    { title: 'Lorem Ipsum Generator', icon: <FileImage size={32} className="text-[#ff8c2b]" />, desc: 'Create dummy placeholder text for layouts', link: '/lorem-ipsum', category: 'Calculators' },
+    { title: 'Multicolor QR Generator', icon: <Globe size={32} className="text-[#ff8c2b]" />, desc: 'Create QR codes with custom colors and presets', link: '/qr-generator', category: 'Calculators', featured: true },
+    { title: 'Color Picker & Palettes', icon: <Wand2 size={32} className="text-[#ff8c2b]" />, desc: 'Explore color themes and copy hex parameters', link: '/color-picker', category: 'Calculators' },
+
     { title: 'Typing Test Pro', icon: <Keyboard size={32} className="text-primary" />, desc: 'Hindi & English WPM test for SSC, Court & CPCT', link: '/typing-test', category: 'Practice', featured: true },
     { title: 'Passport Photo Maker', icon: <Camera size={32} className="text-primary" />, desc: 'Standard passport, visa & exam photos', link: '/passport-photo-maker', category: 'Images' },
     { title: 'Signature Maker', icon: <FileSignature size={32} className="text-secondary" />, desc: 'Draw transparent signatures', link: '/signature-maker', category: 'Images' },

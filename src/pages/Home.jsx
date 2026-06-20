@@ -10,19 +10,40 @@ const { Title, Paragraph } = Typography;
 const Home = () => {
   const navigate = useNavigate();
   const [isDemoVisible, setIsDemoVisible] = useState(false);
-  const [liveUsers, setLiveUsers] = useState(18492);
-  const [totalFiles, setTotalFiles] = useState(38910);
+
+  // Shared reference date: January 1, 2026
+  const BASE_REFERENCE_TIME = 1767225600000;
+
+  const getInitialFiles = () => {
+    const elapsedSeconds = Math.floor((Date.now() - BASE_REFERENCE_TIME) / 1000);
+    // Base 38910 + 1 file processed every 8 seconds (0.125 files per second)
+    return Math.max(38910, 38910 + Math.floor(elapsedSeconds * 0.125));
+  };
+
+  const getInitialLiveUsers = () => {
+    const time = new Date();
+    const minutes = time.getMinutes();
+    const hours = time.getHours();
+    // Synced base user count around 18400 + hourly trend + sine wave variation
+    const baseLive = 18400 + (hours * 12) + Math.floor(Math.sin(minutes) * 45);
+    return baseLive;
+  };
+
+  const [liveUsers, setLiveUsers] = useState(getInitialLiveUsers);
+  const [totalFiles, setTotalFiles] = useState(getInitialFiles);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Simulate live user fluctuations
-      setLiveUsers(prev => {
-        const change = Math.floor(Math.random() * 15) - 7; // -7 to +7
-        return Math.max(18000, prev + change);
+      // Synced to the global clock so every user sees the exact same numbers
+      setTotalFiles(getInitialFiles());
+
+      setLiveUsers(() => {
+        const base = getInitialLiveUsers();
+        // Allow a tiny organic local fluctuation (+/- 5) so it feels fluid
+        const localOffset = Math.floor(Math.random() * 11) - 5;
+        return base + localOffset;
       });
-      // Simulate file count increment
-      setTotalFiles(prev => prev + Math.floor(Math.random() * 5) + 2);
-    }, 6000);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
