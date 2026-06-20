@@ -51,24 +51,24 @@ const toolContentDb = {
     ]
   },
   'image-resizer': {
-    title: 'Image Resizer Pro',
-    desc: 'Resize, compress, and re-format photos to meet strict document guidelines for government portals (like SSC, UPSC, IBPS). Control width, height, aspect ratio, and maximum file size (in KB) effortlessly.',
+    title: 'Image Resizer & JPG to PNG Converter',
+    desc: 'Resize, compress, and re-format photos to meet strict document guidelines for government portals (like SSC, UPSC, IBPS). Convert formats instantly (e.g. JPG to PNG, PNG to JPG, WebP) with precise quality and KB controls executing entirely inside your browser.',
     steps: [
-      'Select and upload the image you want to resize.',
-      'Select an exam photo preset (like Passport Photo, Signature) or enter custom width and height.',
-      'Toggle the aspect ratio lock to prevent image stretching or distortion.',
-      'Choose your preferred target format (JPEG, PNG, or WebP) and adjust the quality slider to control KB size.',
-      'Click "Resize Image" and download the optimized output file.'
+      'Select and upload the image file (JPG, PNG, or WebP) you want to process.',
+      'Enter custom dimensions (width & height in pixels) or choose an official exam preset.',
+      'To convert format (like JPG to PNG), select your target format in the dropdown menu.',
+      'Adjust the quality slider to target a specific KB limit if required.',
+      'Click "Resize Now" and download your converted PNG/JPG image.'
     ],
     features: [
+      { name: 'JPG to PNG Conversion', detail: 'Convert image formats instantly without losing quality or rendering layouts on remote servers.' },
       { name: 'Target KB Compression', detail: 'Set exact limits (e.g., under 20KB or 50KB) to satisfy rigid recruitment portal rules.' },
       { name: 'Exam Presets', detail: 'Pre-loaded dimensions for UPSC, SSC, IBPS, and state PSC passport and signature uploads.' },
-      { name: 'Format Converter', detail: 'Convert images on-the-fly to JPEG, PNG, or WebP to match submission requirements.' },
       { name: 'Aspect Ratio Guard', detail: 'Lock proportions to keep your face and text details looking natural and professional.' }
     ],
     faqs: [
+      { q: 'How do I convert JPG to PNG?', a: 'Simply upload your JPG image, go to the "Output Format" dropdown, select "PNG", and click "Resize Now". The tool will process it locally and download it as a PNG.' },
       { q: 'How do I compress an image to exactly under 20 KB?', a: 'Upload your image, choose JPEG as the output format, and slide the quality slider down (e.g. to 70% or 80%). The live preview will display the estimated output file size. Adjust the slider until it fits your target size limit.' },
-      { q: 'Why is it important to lock the aspect ratio?', a: 'Locking the aspect ratio ensures that when you change the width, the height adjusts proportionally. This prevents your photos from appearing squished or stretched, which can lead to application rejection.' },
       { q: 'Are my personal images safe?', a: 'Yes. Our Image Resizer operates 100% locally in your web browser. Your photos are never uploaded, stored, or reviewed on our servers.' }
     ]
   },
@@ -117,25 +117,24 @@ const toolContentDb = {
     ]
   },
   'pdf-tools': {
-    title: 'PDF Merger Studio',
-    desc: 'Combine multiple PDF files, certificates, and scanned notes into a single cohesive document. Arrange, re-order, and merge pages securely without uploading files to any remote server.',
+    title: 'PDF Merger & PDF to JPG Converter',
+    desc: 'Combine multiple PDF files into one cohesive document, or extract pages as standard JPG images. Arrange, re-order, and convert pages securely without uploading files to any remote server.',
     steps: [
-      'Select and upload multiple PDF files from your device.',
-      'Drag and drop the file list items to re-order the document sequence.',
-      'Review file details including page counts and file sizes.',
-      'Click the "Merge PDFs" button to compile them into a single file.',
-      'Click the download button to save the unified PDF.'
+      'Select and upload your PDF files from your device.',
+      'To Merge: Drag and drop the list items to arrange the sequence, and click "Merge PDFs".',
+      'To Convert PDF to JPG: Click the "PDF to JPG" button to extract the page layout directly as an image.',
+      'Review file details and click the download button to save the output.'
     ],
     features: [
+      { name: 'PDF to JPG Extraction', detail: 'Convert PDF pages into high-resolution JPG images locally inside your browser using PDF.js rendering.' },
       { name: 'Intuitive Drag & Drop', detail: 'Re-arrange the sequence of documents visually to ensure pages appear in the correct order.' },
       { name: 'Fast Compilation', detail: 'Combines large documents in seconds using client-side JavaScript libraries.' },
-      { name: 'No Size Limits', detail: 'Merge as many files as you need since processing relies on local hardware instead of limited server bandwidth.' },
       { name: 'Preserves PDF Metadata', detail: 'Retains original text formatting, hyperlinks, and page resolutions in the merged output.' }
     ],
     faqs: [
+      { q: 'How does PDF to JPG conversion work?', a: 'The tool uses PDF.js to render the vector graphics of your PDF page onto an invisible HTML5 canvas, which is then exported as a high-quality JPG image directly in your browser.' },
       { q: 'Is there a limit to how many files I can merge?', a: 'No, there are no hard limits. You can merge two or twenty files. However, merging very large files on low-end devices might take a few moments depending on your browser memory.' },
-      { q: 'Are my academic certificates secure when merging?', a: 'Yes. The merging process takes place locally inside your browser. Your sensitive educational certificates and personal documents are never transmitted over the internet.' },
-      { q: 'Can I select specific pages from different files to merge?', a: 'Currently, the tool merges full PDF documents together. To split or extract specific pages first, you can use our PDF Editor tool, then merge them.' }
+      { q: 'Are my academic certificates secure when merging?', a: 'Yes. The merging process takes place locally inside your browser. Your sensitive educational certificates and personal documents are never transmitted over the internet.' }
     ]
   },
   'resume-builder': {
@@ -205,23 +204,22 @@ const toolContentDb = {
     ]
   },
   'jpg-to-pdf': {
-    title: 'JPG to PDF Document Converter',
-    desc: 'Convert photographs, handwritten assignments, and ID cards into standard PDF documents. Easily compile scanned images into single multi-page PDF documents locally in your browser.',
+    title: 'JPG / PNG to PDF Multi-Converter',
+    desc: 'Convert multiple photographs, PNG images, handwritten assignments, and ID cards into a single cohesive PDF document. Re-order files and generate PDFs locally without any server uploads.',
     steps: [
-      'Upload one or multiple images (JPG, PNG, WebP) using the file input.',
-      'Drag and drop the uploaded image cards to re-arrange the page sequence.',
-      'Choose paper size presets (A4, Letter) and page orientation (Portrait/Landscape).',
-      'Set desired page margin settings (No Margin, Thin, Normal).',
-      'Click "Convert to PDF" and download the generated document.'
+      'Upload one or multiple images (JPG, JPEG, PNG, or WebP) using the file input.',
+      'To remove an image from the queue, click the trash icon next to it.',
+      'Click "Create PDF Now" to compile all selected images into a single multi-page PDF.',
+      'Review the success status and click "Download PDF" to save your compiled document.'
     ],
     features: [
-      { name: 'Multi-Image Batching', detail: 'Compile dozens of images into a single multi-page PDF file with one click.' },
-      { name: 'Page Layout Presets', detail: 'Format your final PDF to fit standard A4 or Letter sizes with custom margins.' },
-      { name: 'Image Compression Control', detail: 'Adjust output quality to keep the compiled PDF size within upload limits of exam forms.' },
-      { name: 'Secure Local Conversion', detail: 'All image rendering and PDF compiling happen client-side in the browser. Zero upload risk.' }
+      { name: 'Multi-Image PNG/JPG Batching', detail: 'Compile multiple PNG or JPG photos into a single formatted PDF file in one go.' },
+      { name: 'Local PDF Assembly', detail: 'Runs inside your browser using pdf-lib. Your personal documents and images never touch a server.' },
+      { name: 'Page Size Preservation', detail: 'Embedded images retain their original pixel dimensions and aspect ratios inside the output PDF pages.' },
+      { name: 'Clean Clean Interface', detail: 'Add and remove images from your conversion queue easily before rendering the PDF.' }
     ],
     faqs: [
-      { q: 'Can I convert PNG images as well?', a: 'Yes! The tool supports JPG, JPEG, PNG, and WebP image formats, converting them all into standard PDF pages.' },
+      { q: 'Can I compile both PNG and JPG files together?', a: 'Yes! The compiler accepts both formats simultaneously. Each image will be rendered on its own page inside the resulting PDF document.' },
       { q: 'Is there a limit on the number of images I can upload?', a: 'No, but uploading extremely large images may consume significant browser memory. We recommend resizing very large images before compiling.' },
       { q: 'How can I ensure my PDF pages do not look stretched?', a: 'The converter maintains the aspect ratio of your original images, centering them on the selected paper preset size.' }
     ]

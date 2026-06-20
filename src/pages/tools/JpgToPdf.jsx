@@ -3,6 +3,7 @@ import { Card, Upload, Button, Typography, Space, message, List, Row, Col } from
 import { FileImage, Download, Plus, Trash2, Check, Shield } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import { downloadFile } from '../../utils/downloadHelper';
+import ToolContent from '../../components/ToolContent';
 
 const { Title, Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -167,6 +168,8 @@ const JpgToPdf = () => {
           <Text className="text-gray-500">Your images are processed locally. They never leave your browser or get uploaded to any server.</Text>
         </div>
       </div>
+
+      <ToolContent toolKey="jpg-to-pdf" />
     </div>
   );
 };
