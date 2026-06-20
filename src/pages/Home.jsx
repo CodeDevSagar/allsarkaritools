@@ -22,7 +22,7 @@ const Home = () => {
       });
       // Simulate file count increment
       setTotalFiles(prev => prev + Math.floor(Math.random() * 5) + 2);
-    }, 2000);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
