@@ -199,6 +199,66 @@ const Home = () => {
         <AdSlot slot="1234567890" />
       </div>
 
+      {/* ── SEO INFO SECTION ── */}
+      <section className="py-16 px-6 relative z-10 max-w-7xl mx-auto text-left select-text">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mb-16" />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 px-4 py-1.5 rounded-full">
+              <Shield size={14} className="text-[#00f2ff]" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#00f2ff]">100% Privacy Guaranteed</span>
+            </div>
+            
+            <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight uppercase">
+              ⚡ Secure & Smart <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff3b7e] to-[#00f2ff]">Sarkari Utilities</span>
+            </h2>
+            
+            <p className="text-gray-400 leading-relaxed text-base">
+              Online recruitment forms for exams like **UPSC, SSC, NEET, and Bank PO** require documents with exact size ranges (e.g. photos under 50KB, signatures under 20KB). Traditionally, aspirants upload their certificates and images to unknown servers to resize them, risking data leaks.
+            </p>
+            
+            <p className="text-gray-400 leading-relaxed text-base">
+              **AllSarkari Tools** performs all resizing, cropping, and PDF compiling tasks **locally in your web browser sandbox**. Utilizing WebAssembly and client-side processing, your documents never touch the cloud, keeping your identity safe.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {[
+              {
+                icon: "🔒",
+                title: "Zero Uploads",
+                desc: "All calculations and resizing execute locally. Your certificates remain confidential."
+              },
+              {
+                icon: "⚡",
+                title: "Vite Fast",
+                desc: "Process large PDF merges and high-res image modifications near-instantly."
+              },
+              {
+                icon: "🎯",
+                title: "Form Ready",
+                desc: "Pre-set options let you align layout borders to official exam requirements easily."
+              },
+              {
+                icon: "🎓",
+                title: "100% Free",
+                desc: "No premium paywalls or subscriptions. Built solely to help students succeed."
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="p-6 bg-white/[0.02] border border-white/5 rounded-3xl space-y-3">
+                <span className="text-3xl block">{item.icon}</span>
+                <h4 className="text-white font-bold text-lg">{item.title}</h4>
+                <p className="text-gray-500 text-xs leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
       {/* Footer CTA Section */}
       <section className="py-24 px-6 relative z-10 text-center max-w-5xl mx-auto">
         <motion.div
