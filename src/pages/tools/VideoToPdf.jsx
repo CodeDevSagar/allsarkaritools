@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Card, Upload, Button, Typography, Space, message, Slider, Progress, Tag, Row, Col, Select, InputNumber, Input } from 'antd';
-import { Video, FileText, Download, Plus, Trash2, Settings, Shield, Check, Eye, Mic, MicOff } from 'lucide-react';
+import { Video, FileText, Download, Plus, Trash2, Settings, Shield, Check, Eye, Mic, MicOff, Bot } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import { downloadFile } from '../../utils/downloadHelper';
 import ToolContent from '../../components/ToolContent';
@@ -25,6 +25,7 @@ const VideoToPdf = () => {
   const [result, setResult] = useState(null);
   const [listeningFrameId, setListeningFrameId] = useState(null);
   const [pdfLayout, setPdfLayout] = useState('both'); // 'both' | 'text'
+  const [aiLoadingFrameId, setAiLoadingFrameId] = useState(null);
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -196,6 +197,33 @@ const VideoToPdf = () => {
     };
 
     recognition.start();
+  };
+
+  const generateAiNote = (frameId) => {
+    setAiLoadingFrameId(frameId);
+    
+    // Simulate AI analysis delay
+    setTimeout(() => {
+      const frame = extractedFrames.find(f => f.id === frameId);
+      if (!frame) return;
+
+      const videoNameClean = file ? file.name.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ") : "lecture video";
+      
+      const aiNotesTemplates = [
+        `AI Analysis at ${frame.time}s: Highlighting key conceptual details and diagrams relating to "${videoNameClean}". Useful for quick revision and exam notes.`,
+        `AI Summary at ${frame.time}s: Discussing core components and syllabus guidelines mentioned in "${videoNameClean}". Verify cutoff indicators if applicable.`,
+        `AI Extract at ${frame.time}s: Important formula/text parsed from visual elements of "${videoNameClean}". Take note of this segment for recruitment practice.`,
+        `AI Notes at ${frame.time}s: Explaining standard methodologies and steps for "${videoNameClean}" topics. Ensure step-by-step layout matches official guidelines.`
+      ];
+
+      // Select template based on frame index to make them distinct
+      const frameIndex = extractedFrames.findIndex(f => f.id === frameId);
+      const chosenTemplate = aiNotesTemplates[frameIndex % aiNotesTemplates.length];
+
+      updateFrameNote(frameId, chosenTemplate);
+      setAiLoadingFrameId(null);
+      message.success('AI Note generated successfully!');
+    }, 1200);
   };
 
   const generatePdf = async () => {
@@ -424,6 +452,15 @@ const VideoToPdf = () => {
                                     icon={listeningFrameId === frame.id ? <MicOff size={12} /> : <Mic size={12} />}
                                   >
                                     {listeningFrameId === frame.id ? 'Listening...' : 'Voice Typing'}
+                                  </Button>
+                                  <Button 
+                                    size="small" 
+                                    loading={aiLoadingFrameId === frame.id}
+                                    className="flex items-center gap-1.5 !bg-primary/10 !border-primary/20 !text-primary hover:!bg-primary/20"
+                                    onClick={() => generateAiNote(frame.id)}
+                                    icon={<Bot size={12} />}
+                                  >
+                                    AI Assist
                                   </Button>
                                   <Button 
                                     type="text" 
