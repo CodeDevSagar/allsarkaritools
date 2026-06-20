@@ -3,7 +3,7 @@ import { Card, Button, Typography, Space, message, Input, Radio, Row, Col, Divid
 import { FileText, Download, Shield, Check, Globe, Code, Play } from 'lucide-react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas-pro';
+import html2canvas from 'html2canvas';
 
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -26,13 +26,46 @@ const HtmlToPdf = () => {
   <p>Generate high-quality PDF files from direct HTML templates locally.</p>
   <div class="card">
     <h3>Client-Side Rendering</h3>
-    <p>This PDF is generated using jsPDF and html2canvas-pro directly in your browser.</p>
+    <p>This PDF is generated using jsPDF and html2canvas directly in your browser.</p>
   </div>
 </body>
 </html>`);
   const [loading, setLoading] = useState(false);
   const [previewHtml, setPreviewHtml] = useState('');
   const previewRef = useRef(null);
+
+  const makeUrlsAbsolute = (html, baseUrl) => {
+    try {
+      const parsedUrl = baseUrl.startsWith('http') ? baseUrl : 'https://' + baseUrl;
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      
+      const tags = {
+        'link': 'href',
+        'script': 'src',
+        'img': 'src',
+        'a': 'href'
+      };
+
+      Object.entries(tags).forEach(([tagName, attrName]) => {
+        doc.querySelectorAll(tagName).forEach(el => {
+          const val = el.getAttribute(attrName);
+          if (val && !val.startsWith('http://') && !val.startsWith('https://') && !val.startsWith('data:')) {
+            try {
+              const absoluteUrl = new URL(val, parsedUrl).href;
+              el.setAttribute(attrName, absoluteUrl);
+            } catch (e) {
+              console.warn('Failed to resolve URL:', val, e);
+            }
+          }
+        });
+      });
+
+      return doc.documentElement.outerHTML;
+    } catch (err) {
+      console.error('Error rewriting URLs to absolute:', err);
+      return html;
+    }
+  };
 
   const fetchWebpageHtml = async (targetUrl) => {
     if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
@@ -62,13 +95,36 @@ const HtmlToPdf = () => {
     throw new Error('Could not load the webpage via public CORS proxies. Try copying the page HTML code directly in Code Mode.');
   };
 
+  const [previewLoading, setPreviewLoading] = useState(false);
+
+  const handleFetchPreview = async () => {
+    if (!url) return message.warning('Please enter a URL first');
+    setPreviewLoading(true);
+    try {
+      const rawHtml = await fetchWebpageHtml(url);
+      const absoluteHtml = makeUrlsAbsolute(rawHtml, url);
+      setPreviewHtml(absoluteHtml);
+      message.success('Webpage preview loaded successfully!');
+    } catch (error) {
+      console.error(error);
+      message.error('Failed to load preview. You can still try converting directly or using HTML Code mode.');
+    } finally {
+      setPreviewLoading(false);
+    }
+  };
+
   const handleGeneratePdf = async () => {
     setLoading(true);
     try {
       let finalHtml = '';
       if (mode === 'url') {
         if (!url) throw new Error('Please enter a URL');
-        finalHtml = await fetchWebpageHtml(url);
+        if (previewHtml) {
+          finalHtml = previewHtml;
+        } else {
+          const rawHtml = await fetchWebpageHtml(url);
+          finalHtml = makeUrlsAbsolute(rawHtml, url);
+        }
       } else {
         if (!htmlCode.trim()) throw new Error('Please enter HTML code');
         finalHtml = htmlCode;
@@ -76,28 +132,75 @@ const HtmlToPdf = () => {
 
       setPreviewHtml(finalHtml);
 
-      // Create a temporary hidden container to render the HTML securely
+      // Create an invisible 0x0 size helper wrapper to avoid causing horizontal scrollbars on mobile layout
+      const wrapper = document.createElement('div');
+      wrapper.className = 'html-to-pdf-temp-wrapper';
+      wrapper.style.position = 'absolute';
+      wrapper.style.left = '0px';
+      wrapper.style.top = '0px';
+      wrapper.style.width = '0px';
+      wrapper.style.height = '0px';
+      wrapper.style.overflow = 'hidden';
+      wrapper.style.zIndex = '-999999';
+
+      // Create a temporary container to render the HTML securely at desktop layout width
       const container = document.createElement('div');
-      container.style.position = 'absolute';
-      container.style.left = '-9999px';
-      container.style.top = '0px';
+      container.className = 'html-to-pdf-temp-container';
       container.style.width = '800px'; // fixed layout width for clean print
       container.style.minHeight = '600px'; // guarantee non-zero height
-      container.style.background = 'white';
+      container.style.background = '#ffffff';
       container.style.color = '#000000';
-      container.innerHTML = finalHtml;
-      document.body.appendChild(container);
+
+      // Inject strict resets to shield the template from inheriting the dark theme styles of the parent app
+      const resetStyle = document.createElement('style');
+      resetStyle.innerHTML = `
+        .html-to-pdf-temp-container {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+          padding: 40px !important;
+          box-sizing: border-box !important;
+        }
+        .html-to-pdf-temp-container * {
+          color: initial;
+        }
+        .html-to-pdf-temp-container p, 
+        .html-to-pdf-temp-container span, 
+        .html-to-pdf-temp-container div, 
+        .html-to-pdf-temp-container li, 
+        .html-to-pdf-temp-container td, 
+        .html-to-pdf-temp-container th {
+          color: #333333;
+        }
+        .html-to-pdf-temp-container h1, 
+        .html-to-pdf-temp-container h2, 
+        .html-to-pdf-temp-container h3, 
+        .html-to-pdf-temp-container h4, 
+        .html-to-pdf-temp-container h5, 
+        .html-to-pdf-temp-container h6 {
+          color: #000000;
+        }
+      `;
+      container.appendChild(resetStyle);
+
+      const contentWrapper = document.createElement('div');
+      contentWrapper.innerHTML = finalHtml;
+      container.appendChild(contentWrapper);
+      
+      wrapper.appendChild(container);
+      document.body.appendChild(wrapper);
 
       // Give images/scripts a brief moment to render
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       const canvas = await html2canvas(container, {
         useCORS: true,
         allowTaint: true,
         scale: 2, // high quality
+        backgroundColor: '#ffffff',
+        logging: false,
       });
 
-      document.body.removeChild(container);
+      document.body.removeChild(wrapper);
 
       // Sanity checks on canvas dimensions to prevent NaN or division by zero errors in jsPDF
       const canvasWidth = canvas.width > 0 ? canvas.width : 800;
@@ -145,7 +248,7 @@ const HtmlToPdf = () => {
             <Space direction="vertical" className="w-full" size="large">
               <div>
                 <Text className="text-gray-400 font-bold block mb-3 uppercase text-[10px] tracking-widest">Source Mode</Text>
-                <Radio.Group value={mode} onChange={(e) => setMode(e.target.value)} buttonStyle="solid" className="w-full">
+                <Radio.Group value={mode} onChange={(e) => { setMode(e.target.value); setPreviewHtml(''); }} buttonStyle="solid" className="w-full">
                   <Row gutter={8}>
                     <Col span={12}>
                       <Radio.Button value="url" className="w-full text-center !bg-white/5 !border-white/10 hover:!border-primary !text-white flex items-center justify-center gap-2">
@@ -164,15 +267,26 @@ const HtmlToPdf = () => {
               {mode === 'url' ? (
                 <div>
                   <Text className="text-gray-400 font-bold block mb-2 uppercase text-[10px] tracking-widest">Enter Webpage URL</Text>
-                  <Input
-                    size="large"
-                    placeholder="https://example.com"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    className="!bg-white/5 !border-white/10 !text-white !rounded-xl"
-                  />
+                  <div className="flex gap-2">
+                    <Input
+                      size="large"
+                      placeholder="https://example.com"
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
+                      className="!bg-white/5 !border-white/10 !text-white !rounded-xl flex-1"
+                      onPressEnter={handleFetchPreview}
+                    />
+                    <Button 
+                      type="default" 
+                      onClick={handleFetchPreview} 
+                      loading={previewLoading}
+                      className="!bg-white/5 !border-white/10 !text-white h-10 rounded-xl hover:!text-primary hover:!border-primary"
+                    >
+                      Preview
+                    </Button>
+                  </div>
                   <Text className="text-gray-500 text-xs block mt-2">
-                    Note: Pages requiring authentication or complex scripts might render as public snapshots.
+                    Note: Pages requiring authentication or complex scripts might render as public snapshots. Press Enter or click Preview to load.
                   </Text>
                 </div>
               ) : (
@@ -213,10 +327,17 @@ const HtmlToPdf = () => {
                   className="w-full h-full border-0"
                   sandbox="allow-scripts"
                 />
+              ) : previewHtml ? (
+                <iframe
+                  title="html-preview-url"
+                  srcDoc={previewHtml}
+                  className="w-full h-full border-0"
+                  sandbox="allow-scripts"
+                />
               ) : url ? (
-                <div className="text-center py-20 text-gray-400 font-semibold">
+                <div className="text-center py-20 text-gray-400 font-semibold flex flex-col items-center justify-center h-full">
                   <Globe size={32} className="mx-auto mb-2 text-primary animate-pulse" />
-                  URL Preview is simulated on conversion
+                  <span>Click "Preview" or press Enter to load webpage layout.</span>
                 </div>
               ) : (
                 <div className="text-center py-20 text-gray-400">
