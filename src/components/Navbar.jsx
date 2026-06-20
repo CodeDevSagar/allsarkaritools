@@ -30,7 +30,7 @@ const Navbar = () => {
     { label: 'Home', path: '/', icon: <Home size={18} /> },
     { label: 'Tools', path: '/tools', icon: <Wrench size={18} /> },
     { label: 'YouTube Generator', path: '/youtube-generator', icon: <Video size={18} /> },
-    { label: 'Video Downloader', path: '/video-tools', icon: <Download size={18} /> },
+    // { label: 'Video Downloader', path: '/video-tools', icon: <Download size={18} /> }, 
     { label: 'Resume', path: '/resume-builder', icon: <FileText size={18} /> },
     { label: 'Education', path: '/form-helper', icon: <BookOpen size={18} />},
   ];
