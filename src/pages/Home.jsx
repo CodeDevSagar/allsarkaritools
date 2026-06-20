@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Button, Row, Col, Modal } from 'antd';
 import { Camera, FileSignature, FileImage, FileType, Calculator, ArrowRight, Star, Play, Check, Zap, Shield, Wand2, Keyboard, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -10,6 +10,21 @@ const { Title, Paragraph } = Typography;
 const Home = () => {
   const navigate = useNavigate();
   const [isDemoVisible, setIsDemoVisible] = useState(false);
+  const [liveUsers, setLiveUsers] = useState(18492);
+  const [totalFiles, setTotalFiles] = useState(3847910);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Simulate live user fluctuations
+      setLiveUsers(prev => {
+        const change = Math.floor(Math.random() * 15) - 7; // -7 to +7
+        return Math.max(18000, prev + change);
+      });
+      // Simulate file count increment
+      setTotalFiles(prev => prev + Math.floor(Math.random() * 5) + 2);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   const keyOffers = [
     {
@@ -93,6 +108,42 @@ const Home = () => {
                 >
                   <Play size={20} className="fill-current text-[#00f2ff]" /> Learn More
                 </button>
+              </div>
+
+              {/* Live Count Viewer Card */}
+              <div 
+                className="mt-12 p-6 bg-gradient-to-r from-[#1b103c]/60 to-[#0c0721]/80 border border-[#7000ff]/30 rounded-[2rem] backdrop-blur-md max-w-lg shadow-[0_20px_40px_rgba(112,0,255,0.15)] hover:border-[#00f2ff]/40 transition-all duration-300"
+              >
+                <div className="flex items-center justify-between gap-4 flex-wrap">
+                  <div className="flex items-center gap-3">
+                    <div className="relative flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-0.5">Live Active Users 👥</span>
+                      <span className="text-2xl font-black text-white font-mono tracking-tight">
+                        {liveUsers.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="w-[1px] h-10 bg-white/10 hidden sm:block" />
+                  
+                  <div>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-0.5">Processed Today ⚡</span>
+                    <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff007f] to-[#00f2ff] font-mono tracking-tight">
+                      {totalFiles.toLocaleString()}
+                    </span>
+                  </div>
+                  
+                  <div className="w-[1px] h-10 bg-white/10 hidden sm:block" />
+                  
+                  <div>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-0.5">Security 🔒</span>
+                    <span className="text-2xl font-black text-[#00f2ff] font-mono tracking-tight">100% Local</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </Col>
