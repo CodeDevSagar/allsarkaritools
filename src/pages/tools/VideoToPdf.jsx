@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Card, Upload, Button, Typography, Space, message, Slider, Progress, Tag, Row, Col, Select, InputNumber } from 'antd';
-import { Video, FileText, Download, Plus, Trash2, Settings, Shield, Check, Eye } from 'lucide-react';
+import { Card, Upload, Button, Typography, Space, message, Slider, Progress, Tag, Row, Col, Select, InputNumber, Input } from 'antd';
+import { Video, FileText, Download, Plus, Trash2, Settings, Shield, Check, Eye, Mic, MicOff } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import { downloadFile } from '../../utils/downloadHelper';
 import ToolContent from '../../components/ToolContent';
@@ -8,6 +8,7 @@ import ToolContent from '../../components/ToolContent';
 const { Title, Text, Paragraph } = Typography;
 const { Dragger } = Upload;
 const { Option } = Select;
+const { TextArea } = Input;
 
 const VideoToPdf = () => {
   const [file, setFile] = useState(null);
@@ -22,6 +23,7 @@ const VideoToPdf = () => {
   const [progressText, setProgressText] = useState('');
   const [extractedFrames, setExtractedFrames] = useState([]);
   const [result, setResult] = useState(null);
+  const [listeningFrameId, setListeningFrameId] = useState(null);
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -122,7 +124,8 @@ const VideoToPdf = () => {
         frames.push({
           id: `frame-${i}-${Date.now()}`,
           time: time.toFixed(1),
-          dataUrl
+          dataUrl,
+          note: '' // Empty note by default
         });
 
         setProgress(Math.round(((i + 1) / timestamps.length) * 100));
@@ -143,6 +146,55 @@ const VideoToPdf = () => {
   const removeFrame = (id) => {
     setExtractedFrames(prev => prev.filter(f => f.id !== id));
     setResult(null);
+  };
+
+  const updateFrameNote = (frameId, noteText) => {
+    setExtractedFrames(prev => prev.map(f => {
+      if (f.id === frameId) {
+        return { ...f, note: noteText };
+      }
+      return f;
+    }));
+    setResult(null);
+  };
+
+  const startVoiceDictation = (frameId) => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      message.error('Speech recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge.');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = 'en-US'; // English language transcription
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      setListeningFrameId(frameId);
+      message.info('🎙️ Listening... speak clearly into your mic.');
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Speech error:', event.error);
+      message.error(`Voice recognition error: ${event.error}`);
+      setListeningFrameId(null);
+    };
+
+    recognition.onend = () => {
+      setListeningFrameId(null);
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      const currentFrame = extractedFrames.find(f => f.id === frameId);
+      const existingNote = currentFrame ? currentFrame.note : '';
+      const updatedNote = existingNote ? `${existingNote} ${transcript}` : transcript;
+      updateFrameNote(frameId, updatedNote);
+      message.success('Speech converted to text!');
+    };
+
+    recognition.start();
   };
 
   const generatePdf = async () => {
@@ -168,17 +220,34 @@ const VideoToPdf = () => {
           pdf.addPage();
         }
 
-        // Draw frame image full page (with small margins or fit aspect ratio)
-        // Let's fit it within the page with 20px padding
         const padding = 20;
         const targetW = pageWidth - padding * 2;
-        const targetH = pageHeight - padding * 2 - 20; // 20px extra bottom space for footer
+        const hasNote = frame.note && frame.note.trim().length > 0;
+        
+        // If there is notes text, scale the frame down to fit notes text below it
+        const targetH = hasNote ? (pageHeight * 0.65) : (pageHeight - padding * 2 - 20);
 
         pdf.addImage(frame.dataUrl, 'JPEG', padding, padding, targetW, targetH);
         
+        if (hasNote) {
+          // Render header/divider for notes
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(11);
+          pdf.setTextColor(30, 30, 30);
+          pdf.text('Frame Notes / Transcript:', padding, targetH + 30);
+          
+          // Render the notes text
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(9);
+          pdf.setTextColor(70, 70, 70);
+          
+          const splitNotes = pdf.splitTextToSize(frame.note, targetW);
+          pdf.text(splitNotes, padding, targetH + 42);
+        }
+
         // Add footer text showing timestamp
         pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(10);
+        pdf.setFontSize(9);
         pdf.setTextColor(128, 128, 128);
         pdf.text(`Frame at ${frame.time}s | Page ${i + 1} of ${extractedFrames.length}`, padding, pageHeight - padding);
       }
@@ -205,7 +274,7 @@ const VideoToPdf = () => {
         </div>
         <h1 className="responsive-title !text-white !mb-4 tracking-tighter uppercase font-black">Video to PDF Converter</h1>
         <Paragraph className="!text-gray-400 text-lg sm:text-xl">
-          Convert lectures, presentations, and tutorials into high-quality PDF handouts locally.
+          Convert lectures, presentations, and tutorials into high-quality PDF handouts locally. Speak to dictate custom page notes!
         </Paragraph>
       </div>
 
@@ -252,29 +321,58 @@ const VideoToPdf = () => {
                     </div>
                   )}
 
-                  {/* Frame Grid List */}
+                  {/* Frame List with Speech-to-Text Inputs */}
                   {extractedFrames.length > 0 && (
                     <div className="space-y-4 animate-in fade-in duration-500">
                       <div className="flex justify-between items-center">
                         <Title level={5} className="!text-white !m-0 uppercase tracking-widest text-xs flex items-center gap-2">
-                          <Eye size={16} className="text-primary" /> Extracted Frames ({extractedFrames.length})
+                          <Eye size={16} className="text-primary" /> Extracted Frames & Notes ({extractedFrames.length})
                         </Title>
-                        <Text className="text-gray-500 text-xs">Click bin icon to discard frames before compilation</Text>
+                        <Text className="text-gray-500 text-xs">Edit notes or dictations before exporting PDF</Text>
                       </div>
                       
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[300px] overflow-y-auto p-4 bg-black/20 rounded-2xl border border-white/5 custom-scrollbar">
+                      <div className="space-y-4 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
                         {extractedFrames.map((frame, i) => (
-                          <div key={frame.id} className="relative group border border-white/10 rounded-lg overflow-hidden aspect-video bg-black shadow-lg">
-                            <img src={frame.dataUrl} alt={`frame-${i}`} className="w-full h-full object-cover" />
-                            <div className="absolute top-1 left-1 bg-black/75 px-1.5 py-0.5 rounded text-[10px] text-gray-300">
-                              {frame.time}s
+                          <div key={frame.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col md:flex-row gap-4 items-start relative group hover:border-primary/20 transition-all">
+                            {/* Frame Preview */}
+                            <div className="w-full md:w-44 aspect-video border border-white/10 rounded-xl overflow-hidden relative shrink-0 bg-black shadow-md">
+                              <img src={frame.dataUrl} alt={`frame-${i}`} className="w-full h-full object-cover" />
+                              <Tag className="absolute top-1 left-1 !bg-black/80 !border-none !text-white text-[10px]">
+                                {frame.time}s
+                              </Tag>
                             </div>
-                            <button
-                              onClick={() => removeFrame(frame.id)}
-                              className="absolute bottom-1 right-1 bg-red-500 hover:bg-red-600 text-white p-1 rounded transition-colors"
-                            >
-                              <Trash2 size={12} />
-                            </button>
+
+                            {/* Frame Notes / Speech To Text input */}
+                            <div className="flex-1 w-full space-y-3">
+                              <div className="flex items-center justify-between gap-2">
+                                <Text className="text-white font-bold text-xs uppercase tracking-wider">Page {i + 1} Notes</Text>
+                                <div className="flex gap-2">
+                                  <Button 
+                                    size="small" 
+                                    className={`flex items-center gap-1.5 ${listeningFrameId === frame.id ? '!bg-red-500/20 !border-red-500 !text-red-400 animate-pulse' : '!bg-white/5 !border-white/10 !text-gray-400 hover:!text-primary hover:!border-primary'}`}
+                                    onClick={() => startVoiceDictation(frame.id)}
+                                    icon={listeningFrameId === frame.id ? <MicOff size={12} /> : <Mic size={12} />}
+                                  >
+                                    {listeningFrameId === frame.id ? 'Listening...' : 'Voice Typing'}
+                                  </Button>
+                                  <Button 
+                                    type="text" 
+                                    danger 
+                                    size="small" 
+                                    icon={<Trash2 size={14} />} 
+                                    onClick={() => removeFrame(frame.id)}
+                                    className="hover:!bg-red-500/10"
+                                  />
+                                </div>
+                              </div>
+                              <TextArea
+                                rows={2}
+                                value={frame.note}
+                                onChange={(e) => updateFrameNote(frame.id, e.target.value)}
+                                placeholder="Type notes here or click 'Voice Typing' to speak..."
+                                className="!bg-black/40 !border-white/10 !text-white !rounded-xl placeholder:text-gray-600 focus:!border-primary/50 text-sm"
+                              />
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -290,12 +388,12 @@ const VideoToPdf = () => {
                   <Check size={24} className="text-primary" />
                 </div>
                 <Title level={4} className="!text-white !mb-1">PDF Compilation Ready!</Title>
-                <Paragraph className="!text-gray-400 text-xs mb-4">Compiled all selected frames into a high-quality PDF handout.</Paragraph>
+                <Paragraph className="!text-gray-400 text-xs mb-4">Compiled all selected frames and notes into a PDF file.</Paragraph>
                 <Button
                   icon={<Download size={18} />}
                   type="primary"
                   className="!bg-primary !border-none !text-black font-black h-12 px-8 rounded-xl shadow-lg w-full"
-                  onClick={() => downloadFile(result, `video-frames-${Date.now()}.pdf`)}
+                  onClick={() => downloadFile(result, `video-frames-notes-${Date.now()}.pdf`)}
                 >
                   Download PDF
                 </Button>
