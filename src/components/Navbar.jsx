@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Drawer } from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Home, Wrench, FileText, Menu as MenuIcon, X, Landmark, Info, BookOpen } from 'lucide-react';
+import { Home, Wrench, FileText, Menu as MenuIcon, X, Landmark, Info, BookOpen, Video, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedLogo from './AnimatedLogo';
 
@@ -29,6 +29,8 @@ const Navbar = () => {
   const navLinks = [
     { label: 'Home', path: '/', icon: <Home size={18} /> },
     { label: 'Tools', path: '/tools', icon: <Wrench size={18} /> },
+    { label: 'YouTube Generator', path: '/youtube-generator', icon: <Video size={18} /> },
+    { label: 'Video Downloader', path: '/video-tools', icon: <Download size={18} /> },
     { label: 'Resume', path: '/resume-builder', icon: <FileText size={18} /> },
     { label: 'Education', path: '/form-helper', icon: <BookOpen size={18} />},
   ];

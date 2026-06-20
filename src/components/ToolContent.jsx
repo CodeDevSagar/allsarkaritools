@@ -508,6 +508,50 @@ const toolContentDb = {
       { q: 'What is the maximum video file size I can upload?', a: 'You can upload files up to 100MB. Since all processing runs inside browser memory, larger files may cause browser tabs to refresh or lag on lower-spec devices.' },
       { q: 'Will the final PDF contain audio or play videos?', a: 'No, PDF is a static document format. The tool extracts visual snapshots/keyframes from the video and compiles them as printable image pages in a PDF document.' }
     ]
+  },
+  'jpg-to-png': {
+    title: 'JPG to PNG Image Converter',
+    desc: 'The JPG to PNG Image Converter is a state-of-the-art utility designed to convert compressed JPEG/JPG images into high-resolution, lossless PNG files instantly. Built specifically to assist candidates, students, and professionals in submitting online forms (UPSC, SSC, State PSC, NTA, Banking, etc.), this converter processes images directly in your browser. Unlike traditional online converters, your files are never uploaded to a cloud server, ensuring 100% data safety, confidentiality, and protection from identity theft.',
+    steps: [
+      'Upload your JPG/JPEG image by clicking the upload area or dragging and dropping the file.',
+      'Check the preview image on the left card to ensure it is the correct file.',
+      'Select whether you want a transparent canvas background or a solid white base (default is transparent).',
+      'Click the "Convert to PNG" button to process the image using client-side canvas rendering.',
+      'View the converted image in the results pane and click "Download PNG Image" to save it.'
+    ],
+    features: [
+      { name: '100% Client-Side Conversion', detail: 'Runs entirely in your local browser sandbox using modern HTML5 Canvas technology. No data packages are sent over the internet.' },
+      { name: 'Lossless Quality Output', detail: 'PNG uses lossless compression algorithms, ensuring that text, borders, signatures, and photographic details remain sharp and clear.' },
+      { name: 'Transparent Background Option', detail: 'Toggle transparent canvas backgrounds, which is extremely helpful when converting signature scans and logo graphics.' },
+      { name: 'Completely Free & No Watermarks', detail: 'Convert as many images as you need without premium subscriptions, ads, signup forms, or mandatory watermarks.' }
+    ],
+    faqs: [
+      { q: 'What is the main difference between JPG and PNG?', a: 'JPG is a lossy format optimized for photographs where minor detail loss is acceptable to keep files tiny. PNG is a lossless format that preserves exact pixel color and details, and supports alpha transparency channels (transparent backgrounds).' },
+      { q: 'Why do recruitment portals ask for PNG format instead of JPG?', a: 'Portals often request PNG files for signature scans and digital seals because PNG preserves transparency. This allows the system to overlay signatures onto document templates cleanly without displaying a solid white box.' },
+      { q: 'Will my converted image look blurry or lose quality?', a: 'No. Because PNG is a lossless format, the pixels drawn onto the canvas are saved with perfect accuracy, maintaining the exact resolution and sharpness of the original JPG source.' }
+    ]
+  },
+  'png-to-jpg': {
+    title: 'PNG to JPG Image Converter',
+    desc: 'The PNG to JPG Image Converter is an optimized utility that converts PNG files into universal, lightweight JPG format. Many official application portals require images (especially passport-sized photographs) in JPEG/JPG format under specific file size limits (like under 50KB). This tool allows you to convert PNG files, set custom JPEG compression quality, and preview the resulting output files instantly, ensuring compatibility with all portals while operating completely offline in your browser.',
+    steps: [
+      'Upload your PNG file by dragging it into the drop box or selecting it from your device storage.',
+      'View the uploaded file in the live preview window.',
+      'Use the interactive slider to adjust the JPG compression quality (recommended setting is 80-90% for a balance between clarity and size).',
+      'Click the "Convert to JPG" button to run the local rendering script.',
+      'Click the "Download JPG Image" button to save the optimized file.'
+    ],
+    features: [
+      { name: 'Interactive Quality Slider', detail: 'Adjust quality levels from 10% to 100% to easily control file dimensions and output KB parameters.' },
+      { name: 'Solid White Base Fill', detail: 'Automatically fills transparent pixels with solid white, preventing black backgrounds commonly caused by naive conversion.' },
+      { name: 'Local Browser Processing', detail: 'Processes files locally using client-side canvas. Your images and documents never leave your PC.' },
+      { name: 'Vite-Fast Stamping', detail: 'Converts and formats files instantly, so you do not have to wait for server queues or uploads.' }
+    ],
+    faqs: [
+      { q: 'Why does my transparent PNG get a white background after converting to JPG?', a: 'The JPG format does not support transparency channels (alpha transparency). Therefore, our converter automatically fills all transparent areas with a clean white color to make the image suitable for passport photos and official document standards.' },
+      { q: 'How does the quality slider affect the final file size?', a: 'Lowering the quality compresses the image data more aggressively. A quality of 90% keeps the image looking sharp while significantly reducing file size. Settings below 50% will compress the file even more but might introduce pixelation.' },
+      { q: 'Is there any risk of third parties accessing my photos?', a: 'None at all. The conversion runs inside your browser. No files are uploaded to any external server or stored on our side.' }
+    ]
   }
 };
 

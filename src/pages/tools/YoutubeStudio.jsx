@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Input, Button, Tabs, Space, Typography, Row, Col, Select, message, Tag } from 'antd';
 import { Search, Copy, Download, Hash, Key, Video, FileText, Sparkles, HelpCircle } from 'lucide-react';
 
@@ -6,8 +6,12 @@ const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
 
-const YoutubeStudio = () => {
-  const [activeTab, setActiveTab] = useState('title');
+const YoutubeStudio = ({ defaultTab = 'title' }) => {
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  useEffect(() => {
+    setActiveTab(defaultTab);
+  }, [defaultTab]);
   const [loading, setLoading] = useState(false);
 
   // Title Generator states

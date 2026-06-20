@@ -30,11 +30,16 @@ import PdfCrop from './pages/tools/PdfCrop';
 import SalarySlabs from './pages/tools/SalarySlabs';
 import VideoToPdf from './pages/tools/VideoToPdf';
 import AboutUs from './pages/AboutUs';
+import JpgToPng from './pages/tools/JpgToPng';
+import PngToJpg from './pages/tools/PngToJpg';
+import VideoDownloaderSuite from './pages/tools/VideoDownloaderSuite';
 
 // New Dispatchers
 import YoutubeTool from './pages/tools/YoutubeTool';
 import DevTool from './pages/tools/DevTool';
 import UtilTool from './pages/tools/UtilTool';
+import YoutubeStudio from './pages/tools/YoutubeStudio';
+import DevSuite from './pages/tools/DevSuite';
 
 
 // Legal Pages
@@ -73,6 +78,9 @@ const App = () => {
                 <Route path="/resume-builder" element={<ResumeBuilder />} />
                 <Route path="/age-calculator" element={<AgeCalculator />} />
                 <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
+                <Route path="/jpg-to-png" element={<JpgToPng />} />
+                <Route path="/png-to-jpg" element={<PngToJpg />} />
+                <Route path="/video-tools" element={<VideoDownloaderSuite />} />
                 <Route path="/form-helper" element={<FormHelper />} />
                 <Route path="/office-tools" element={<OfficeTools />} />
                 <Route path="/ai-website-builder" element={<AiWebsiteBuilder />} />
@@ -91,20 +99,22 @@ const App = () => {
                 <Route path="/video-to-pdf" element={<VideoToPdf />} />
                 
                 {/* YouTube Tools */}
-                <Route path="/youtube-title" element={<YoutubeTool type="title" />} />
-                <Route path="/youtube-description" element={<YoutubeTool type="description" />} />
-                <Route path="/youtube-thumbnail" element={<YoutubeTool type="thumbnail" />} />
-                <Route path="/youtube-keyword" element={<YoutubeTool type="keyword" />} />
-                <Route path="/youtube-tags" element={<YoutubeTool type="tags" />} />
-                <Route path="/youtube-hash" element={<YoutubeTool type="hash" />} />
+                <Route path="/youtube-generator" element={<YoutubeStudio />} />
+                <Route path="/youtube-title" element={<YoutubeStudio defaultTab="title" />} />
+                <Route path="/youtube-description" element={<YoutubeStudio defaultTab="desc" />} />
+                <Route path="/youtube-thumbnail" element={<YoutubeStudio defaultTab="thumbnail" />} />
+                <Route path="/youtube-keyword" element={<YoutubeStudio defaultTab="keywords" />} />
+                <Route path="/youtube-tags" element={<YoutubeStudio defaultTab="keywords" />} />
+                <Route path="/youtube-hash" element={<YoutubeStudio defaultTab="hash" />} />
 
                 {/* Developer Tools */}
-                <Route path="/json-formatter" element={<DevTool type="json" />} />
-                <Route path="/html-formatter" element={<DevTool type="html" />} />
-                <Route path="/xml-formatter" element={<DevTool type="xml" />} />
-                <Route path="/css-minifier" element={<DevTool type="css-minify" />} />
-                <Route path="/css-beautifier" element={<DevTool type="css-beautify" />} />
-                <Route path="/meta-tag-generator" element={<DevTool type="meta" />} />
+                <Route path="/developer-tools" element={<DevSuite />} />
+                <Route path="/json-formatter" element={<DevSuite defaultTab="json" />} />
+                <Route path="/html-formatter" element={<DevSuite defaultTab="html" />} />
+                <Route path="/xml-formatter" element={<DevSuite defaultTab="xml" />} />
+                <Route path="/css-minifier" element={<DevSuite defaultTab="css" />} />
+                <Route path="/css-beautifier" element={<DevSuite defaultTab="css" />} />
+                <Route path="/meta-tag-generator" element={<DevSuite defaultTab="meta" />} />
 
                 {/* General Utilities */}
                 <Route path="/password-generator" element={<UtilTool type="password" />} />

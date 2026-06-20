@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Input, Button, Tabs, Space, Typography, Row, Col, Select, message } from 'antd';
 import { Code, Copy, RefreshCw, Minimize, Sparkles, Terminal, FileCode, Check } from 'lucide-react';
 
@@ -6,8 +6,12 @@ const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
 
-const DevSuite = () => {
-  const [activeTab, setActiveTab] = useState('json');
+const DevSuite = ({ defaultTab = 'json' }) => {
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  useEffect(() => {
+    setActiveTab(defaultTab);
+  }, [defaultTab]);
   const [loading, setLoading] = useState(false);
 
   // General Text Input / Output states

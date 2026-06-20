@@ -68,23 +68,20 @@ const AllTools = () => {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   
+  // Track tool clicks
+  const handleToolClick = (link) => {
+    if (!link) return;
+    try {
+      const usage = JSON.parse(localStorage.getItem('sarkari_tool_usage') || '{}');
+      usage[link] = (usage[link] || 0) + 1;
+      localStorage.setItem('sarkari_tool_usage', JSON.stringify(usage));
+    } catch (e) {
+      console.error('Error tracking tool usage:', e);
+    }
+    navigate(link);
+  };
+
   const tools = [
-    // YouTube SEO Tools
-    { title: 'YouTube Title Generator', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Generate engaging and high-CTR video title ideas', link: '/youtube-title', category: 'AI Tools', featured: true },
-    { title: 'YouTube Description Generator', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Generate structured SEO description templates', link: '/youtube-description', category: 'AI Tools' },
-    { title: 'YouTube Thumbnail Downloader', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Download high-quality video thumbnail images', link: '/youtube-thumbnail', category: 'AI Tools' },
-    { title: 'YouTube Keyword Generator', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Find SEO optimized tags and search keywords', link: '/youtube-keyword', category: 'AI Tools' },
-    { title: 'YouTube Tags Extractor', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Extract metadata tags from any public video', link: '/youtube-tags', category: 'AI Tools' },
-    { title: 'YouTube Hash Generator', icon: <Video size={32} className="text-[#ff007f]" />, desc: 'Create trending hashtag bundles for your video', link: '/youtube-hash', category: 'AI Tools' },
-
-    // Developer & Formatters
-    { title: 'JSON Formatter & Validator', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Parse, validate and pretty-print JSON trees', link: '/json-formatter', category: 'Documents', featured: true },
-    { title: 'HTML Formatter', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Format and beautify HTML document markup', link: '/html-formatter', category: 'Documents' },
-    { title: 'XML Formatter', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Format and beautify XML data structures', link: '/xml-formatter', category: 'Documents' },
-    { title: 'CSS Minifier', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Compress stylesheets by stripping extra whitespace', link: '/css-minifier', category: 'Documents' },
-    { title: 'CSS Beautifier', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Format CSS codes with customizable indents', link: '/css-beautifier', category: 'Documents' },
-    { title: 'Meta Tag Generator', icon: <Code size={32} className="text-[#00f2ff]" />, desc: 'Create standard HTML/OG meta headers for websites', link: '/meta-tag-generator', category: 'Documents' },
-
     // General Utilities
     { title: 'Password Generator', icon: <Lock size={32} className="text-[#ff8c2b]" />, desc: 'Generate secure cryptographic passwords locally', link: '/password-generator', category: 'Calculators' },
     { title: 'Word Counter', icon: <FileImage size={32} className="text-[#ff8c2b]" />, desc: 'Analyze text statistics, words, and characters', link: '/word-counter', category: 'Calculators' },
@@ -98,6 +95,11 @@ const AllTools = () => {
     { title: 'Passport Photo Maker', icon: <Camera size={32} className="text-primary" />, desc: 'Standard passport, visa & exam photos', link: '/passport-photo-maker', category: 'Images' },
     { title: 'Signature Maker', icon: <FileSignature size={32} className="text-secondary" />, desc: 'Draw transparent signatures', link: '/signature-maker', category: 'Images' },
     { title: 'Image Resizer', icon: <ImageIcon size={32} className="text-accent" />, desc: 'Compress images below specific KB', link: '/image-resizer', category: 'Images' },
+    
+    // New Image Converters
+    { title: 'JPG to PNG Converter', icon: <FileImage size={32} className="text-[#00f2ff]" />, desc: 'Convert JPG/JPEG images to transparent or solid PNG format locally', link: '/jpg-to-png', category: 'Images', featured: true },
+    { title: 'PNG to JPG Converter', icon: <FileImage size={32} className="text-[#ff3b7e]" />, desc: 'Convert PNG images to high quality JPG format locally', link: '/png-to-jpg', category: 'Images', featured: true },
+
     { title: 'PDF Merger', icon: <FileType size={32} className="text-primary" />, desc: 'Combine multiple PDFs into one', link: '/pdf-tools', category: 'PDF' },
     { title: 'Resume Builder', icon: <FileSignature size={32} className="text-secondary" />, desc: 'ATS-friendly professional resumes', link: '/resume-builder', category: 'Documents' },
     { title: 'Age Calculator', icon: <Calculator size={32} className="text-accent" />, desc: 'Calculate exact age for eligibility', link: '/age-calculator', category: 'Calculators' },
@@ -121,11 +123,64 @@ const AllTools = () => {
 
   const categories = ['All', 'AI Tools', 'Practice', 'Images', 'PDF', 'Documents', 'Office', 'Calculators'];
 
+  // Filter tools by search query and active category
   const filteredTools = tools.filter(t => {
     const matchesSearch = t.title.toLowerCase().includes(search.toLowerCase()) || t.desc.toLowerCase().includes(search.toLowerCase());
     const matchesCategory = activeCategory === 'All' || t.category === activeCategory;
     return matchesSearch && matchesCategory;
   });
+
+  // Hotkey support for search input focus
+  const searchInputRef = React.useRef(null);
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey && e.key === 'k') || e.key === '/') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Seeds and dynamic usage sorting
+  const finalUsage = React.useMemo(() => {
+    try {
+      const usage = JSON.parse(localStorage.getItem('sarkari_tool_usage') || '{}');
+      const seeds = {
+        '/typing-test': 15,
+        '/image-resizer': 12,
+        '/passport-photo-maker': 10,
+        '/resume-builder': 8
+      };
+      return { ...seeds, ...usage };
+    } catch (e) {
+      return {};
+    }
+  }, []);
+
+  const sortedTools = React.useMemo(() => {
+    return [...filteredTools].sort((a, b) => {
+      const countA = finalUsage[a.link] || 0;
+      const countB = finalUsage[b.link] || 0;
+      if (countB !== countA) {
+        return countB - countA;
+      }
+      if (b.featured && !a.featured) return 1;
+      if (a.featured && !b.featured) return -1;
+      return 0;
+    });
+  }, [filteredTools, finalUsage]);
+
+  // Top 3 popular tools get "Mostly Used" badge
+  const topThreeLinks = React.useMemo(() => {
+    const sorted = [...tools].sort((a, b) => {
+      const countA = finalUsage[a.link] || 0;
+      const countB = finalUsage[b.link] || 0;
+      return countB - countA;
+    });
+    return sorted.slice(0, 3).map(t => t.link);
+  }, [finalUsage]);
 
   return (
     <div className="bg-[#080415] min-h-screen text-white relative overflow-hidden font-sans pb-20">
@@ -153,15 +208,19 @@ const AllTools = () => {
           </motion.p>
 
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }} className="max-w-2xl mx-auto relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#7000ff] to-[#00f2ff] rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000" />
+            <div className="absolute -inset-1.5 bg-gradient-to-r from-[#ff3b7e] via-[#7000ff] to-[#00f2ff] rounded-3xl blur-md opacity-30 group-hover:opacity-75 transition duration-1000" />
             <Input 
-              prefix={<Search size={24} className="text-gray-500 mr-3" />} 
-              placeholder="Search for 'Photo Maker', 'Typing Test', 'PDF'..." 
+              ref={searchInputRef}
+              prefix={<Search size={22} className="text-cyan-400 mr-2" />} 
+              placeholder="Search for tools (e.g. Resizer, PDF, Typing)..." 
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="relative h-16 sm:h-20 !bg-[#0c0721] !border-white/10 hover:!border-[#00f2ff]/50 focus:!border-[#00f2ff] !text-white !rounded-3xl !text-lg sm:!text-xl shadow-2xl pl-6"
+              className="relative h-14 sm:h-16 !bg-[#0f0a28]/95 !border !border-[#7000ff]/40 hover:!border-[#00f2ff]/80 focus:!border-[#00f2ff] !text-white !rounded-2xl !text-base sm:!text-lg shadow-[0_8px_32px_0_rgba(112,0,255,0.2)] backdrop-blur-md transition-all duration-300 pl-6 pr-16"
               allowClear
             />
+            <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1 bg-white/5 border border-white/10 px-2 py-0.5 rounded-lg text-gray-500 text-xs pointer-events-none font-mono">
+              <span>Ctrl</span><span>K</span>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -191,54 +250,61 @@ const AllTools = () => {
         {/* Tools Grid */}
         <AnimatePresence mode="popLayout">
           <Row gutter={[24, 32]}>
-            {filteredTools.map((tool, index) => (
-              <Col xs={24} sm={tool.featured ? 24 : 12} lg={tool.featured ? 24 : 8} key={tool.title}>
-                 <motion.div
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  whileHover={{ y: -6, scale: 1.02 }}
-                  className="h-full"
-                >
-                  <HoverParticlesCard onClick={() => tool.link && navigate(tool.link)}>
-                    {/* Hover Glow Effect */}
-                    <div className="absolute -top-20 -right-20 w-44 h-44 bg-[#ff007f]/10 rounded-full blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            {sortedTools.map((tool, index) => {
+              const isMostlyUsed = topThreeLinks.includes(tool.link);
+              return (
+                <Col xs={24} sm={12} lg={8} key={tool.title}>
+                   <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3 }}
+                    whileHover={{ y: -6, scale: 1.02 }}
+                    className="h-full"
+                  >
+                    <HoverParticlesCard onClick={() => handleToolClick(tool.link)}>
+                      {/* Hover Glow Effect */}
+                      <div className="absolute -top-20 -right-20 w-44 h-44 bg-[#ff007f]/10 rounded-full blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-                    <div className="flex justify-between items-start mb-8 relative z-10">
-                      <div className="w-16 h-16 bg-white/5 border border-white/10 group-hover:bg-[#ff007f]/15 group-hover:border-[#ff007f]/40 rounded-2xl flex items-center justify-center transition-all duration-300">
-                        <div className="group-hover:scale-110 group-hover:-rotate-6 transition-transform">
-                          {tool.icon}
+                      <div className="flex justify-between items-start mb-8 relative z-10">
+                        <div className="w-16 h-16 bg-white/5 border border-white/10 group-hover:bg-[#ff007f]/15 group-hover:border-[#ff007f]/40 rounded-2xl flex items-center justify-center transition-all duration-300">
+                          <div className="group-hover:scale-110 group-hover:-rotate-6 transition-transform">
+                            {tool.icon}
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-end gap-2">
+                          {isMostlyUsed ? (
+                            <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-black text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-1 shadow-[0_0_15px_rgba(245,158,11,0.5)]">
+                              🔥 Mostly Used
+                            </span>
+                          ) : tool.featured ? (
+                            <span className="bg-gradient-to-r from-[#ff4500] to-[#ff007f] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-1 shadow-[0_0_15px_rgba(255,0,127,0.4)]">
+                              <Target size={12} /> Pro Feature
+                            </span>
+                          ) : null}
+                          <span className="!bg-[#ff007f]/20 !text-[#ff5e36] !border-[#ff007f]/30 border text-gray-400 uppercase text-[10px] tracking-widest rounded-full px-4 py-1 font-bold group-hover:border-[#ff007f]/50 transition-all">
+                            {tool.category}
+                          </span>
                         </div>
                       </div>
-                      <div className="flex flex-col items-end gap-2">
-                        {tool.featured && (
-                          <span className="bg-gradient-to-r from-[#ff4500] to-[#ff007f] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-1 shadow-[0_0_15px_rgba(255,0,127,0.4)]">
-                            <Target size={12} /> Pro Feature
-                          </span>
-                        )}
-                        <span className="!bg-[#ff007f]/20 !text-[#ff5e36] !border-[#ff007f]/30 border text-gray-400 uppercase text-[10px] tracking-widest rounded-full px-4 py-1 font-bold group-hover:border-[#ff007f]/50 transition-all">
-                          {tool.category}
-                        </span>
+                      
+                      <div className="relative z-10 flex-grow">
+                        <h3 className="text-2xl font-black text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#ff007f] transition-all">{tool.title}</h3>
+                        <p className="text-gray-400 leading-relaxed text-base mb-6 font-medium">{tool.desc}</p>
                       </div>
-                    </div>
-                    
-                    <div className="relative z-10 flex-grow">
-                      <h3 className="text-2xl font-black text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#ff007f] transition-all">{tool.title}</h3>
-                      <p className="text-gray-400 leading-relaxed text-base mb-6 font-medium">{tool.desc}</p>
-                    </div>
-                    
-                    <div className="pt-6 border-t border-white/5 flex items-center justify-between text-[#ff5e36] font-extrabold text-sm group-hover:text-white transition-colors relative z-10 mt-auto w-full">
-                      <span>Launch Application</span>
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#ff5e36] to-[#ff007f] text-white flex items-center justify-center shadow-md shadow-[#ff007f]/20 group-hover:shadow-[#ff007f]/50 transition-all duration-300 transform group-hover:translate-x-1">
-                        <ArrowRightLeft size={14} />
+                      
+                      <div className="pt-6 border-t border-white/5 flex items-center justify-between text-[#ff5e36] font-extrabold text-sm group-hover:text-white transition-colors relative z-10 mt-auto w-full">
+                        <span>Launch Application</span>
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#ff5e36] to-[#ff007f] text-white flex items-center justify-center shadow-md shadow-[#ff007f]/20 group-hover:shadow-[#ff007f]/50 transition-all duration-300 transform group-hover:translate-x-1">
+                          <ArrowRightLeft size={14} />
+                        </div>
                       </div>
-                    </div>
-                  </HoverParticlesCard>
-                </motion.div>
-              </Col>
-            ))}
+                    </HoverParticlesCard>
+                  </motion.div>
+                </Col>
+              );
+            })}
           </Row>
         </AnimatePresence>
         
