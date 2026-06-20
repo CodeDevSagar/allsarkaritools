@@ -24,6 +24,7 @@ const VideoToPdf = () => {
   const [extractedFrames, setExtractedFrames] = useState([]);
   const [result, setResult] = useState(null);
   const [listeningFrameId, setListeningFrameId] = useState(null);
+  const [pdfLayout, setPdfLayout] = useState('both'); // 'both' | 'text'
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -213,43 +214,111 @@ const VideoToPdf = () => {
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
 
-      for (let i = 0; i < extractedFrames.length; i++) {
-        const frame = extractedFrames[i];
-        
-        if (i > 0) {
-          pdf.addPage();
-        }
-
-        const padding = 20;
+      if (pdfLayout === 'text') {
+        const padding = 40;
+        let currentY = padding + 45;
         const targetW = pageWidth - padding * 2;
-        const hasNote = frame.note && frame.note.trim().length > 0;
-        
-        // If there is notes text, scale the frame down to fit notes text below it
-        const targetH = hasNote ? (pageHeight * 0.65) : (pageHeight - padding * 2 - 20);
 
-        pdf.addImage(frame.dataUrl, 'JPEG', padding, padding, targetW, targetH);
-        
-        if (hasNote) {
-          // Render header/divider for notes
-          pdf.setFont('helvetica', 'bold');
-          pdf.setFontSize(11);
-          pdf.setTextColor(30, 30, 30);
-          pdf.text('Frame Notes / Transcript:', padding, targetH + 30);
-          
-          // Render the notes text
-          pdf.setFont('helvetica', 'normal');
-          pdf.setFontSize(9);
-          pdf.setTextColor(70, 70, 70);
-          
-          const splitNotes = pdf.splitTextToSize(frame.note, targetW);
-          pdf.text(splitNotes, padding, targetH + 42);
-        }
+        // Render Document Title
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(20);
+        pdf.setTextColor(20, 20, 30);
+        pdf.text('Extracted Video Lecture Transcript', padding, padding + 15);
 
-        // Add footer text showing timestamp
+        // Subtitle Info
         pdf.setFont('helvetica', 'normal');
         pdf.setFontSize(9);
-        pdf.setTextColor(128, 128, 128);
-        pdf.text(`Frame at ${frame.time}s | Page ${i + 1} of ${extractedFrames.length}`, padding, pageHeight - padding);
+        pdf.setTextColor(110, 110, 110);
+        pdf.text(`Source File: ${file ? file.name : 'Video Handout'} | Duration: ${duration.toFixed(1)}s`, padding, padding + 28);
+
+        // Header Line
+        pdf.setDrawColor(230, 230, 230);
+        pdf.setLineWidth(1);
+        pdf.line(padding, padding + 35, pageWidth - padding, padding + 35);
+
+        let pageIndex = 1;
+
+        for (let i = 0; i < extractedFrames.length; i++) {
+          const frame = extractedFrames[i];
+          const hasNote = frame.note && frame.note.trim().length > 0;
+          const noteText = hasNote ? frame.note.trim() : '[No dictated notes for this frame]';
+          
+          const splitNotes = pdf.splitTextToSize(noteText, targetW);
+          const blockHeight = 22 + (splitNotes.length * 11) + 15; // 22px header, 11px per line, 15px bottom spacing
+
+          // Check if block overflows page
+          if (currentY + blockHeight > pageHeight - padding) {
+            // Draw page number footer before adding new page
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(8);
+            pdf.setTextColor(150, 150, 150);
+            pdf.text(`Page ${pageIndex}`, pageWidth / 2, pageHeight - 20, { align: 'center' });
+
+            pdf.addPage();
+            pageIndex++;
+            currentY = padding + 20;
+          }
+
+          // Render Timestamp Label
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(10);
+          pdf.setTextColor(0, 100, 250); // Darker blue for visibility on white PDF page
+          pdf.text(`⏱️ Transcript Frame at ${frame.time}s`, padding, currentY);
+
+          // Render Notes Content
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(9);
+          pdf.setTextColor(60, 60, 60);
+          pdf.text(splitNotes, padding, currentY + 12);
+
+          currentY += blockHeight;
+        }
+
+        // Draw last page number footer
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(8);
+        pdf.setTextColor(150, 150, 150);
+        pdf.text(`Page ${pageIndex}`, pageWidth / 2, pageHeight - 20, { align: 'center' });
+
+      } else {
+        // Page per page slide layout
+        for (let i = 0; i < extractedFrames.length; i++) {
+          const frame = extractedFrames[i];
+          
+          if (i > 0) {
+            pdf.addPage();
+          }
+
+          const padding = 20;
+          const targetW = pageWidth - padding * 2;
+          const hasNote = frame.note && frame.note.trim().length > 0;
+          
+          const targetH = hasNote ? (pageHeight * 0.65) : (pageHeight - padding * 2 - 20);
+
+          pdf.addImage(frame.dataUrl, 'JPEG', padding, padding, targetW, targetH);
+          
+          if (hasNote) {
+            // Render header
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(11);
+            pdf.setTextColor(30, 30, 30);
+            pdf.text('Frame Notes / Transcript:', padding, targetH + 30);
+            
+            // Render notes text
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(9);
+            pdf.setTextColor(70, 70, 70);
+            
+            const splitNotes = pdf.splitTextToSize(frame.note, targetW);
+            pdf.text(splitNotes, padding, targetH + 42);
+          }
+
+          // Add footer text showing timestamp
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(9);
+          pdf.setTextColor(128, 128, 128);
+          pdf.text(`Frame at ${frame.time}s | Page ${i + 1} of ${extractedFrames.length}`, padding, pageHeight - padding);
+        }
       }
 
       const pdfBlob = pdf.output('blob');
@@ -260,6 +329,7 @@ const VideoToPdf = () => {
       console.error(err);
       message.error('Failed to build PDF document.');
     } finally {
+      setFile(prev => prev); // keep state trigger
       setLoading(false);
       setProgressText('');
     }
@@ -455,6 +525,14 @@ const VideoToPdf = () => {
                 <Select value={orientation} onChange={setOrientation} className="w-full" size="large">
                   <Option value="portrait">Portrait Orientation</Option>
                   <Option value="landscape">Landscape Orientation</Option>
+                </Select>
+              </div>
+
+              <div>
+                <Text className="text-gray-400 font-bold block mb-4 uppercase text-[10px] tracking-widest">PDF Content Mode</Text>
+                <Select value={pdfLayout} onChange={setPdfLayout} className="w-full" size="large">
+                  <Option value="both">Video Images + Page Notes</Option>
+                  <Option value="text">Text Notes Only (with Timestamps)</Option>
                 </Select>
               </div>
 
