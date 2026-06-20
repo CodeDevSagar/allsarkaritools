@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Typography, Input, Tag } from 'antd';
-import { Camera, FileSignature, Image as ImageIcon, FileType, Calculator, Search, Zap, Info, FileImage, Landmark, FileSpreadsheet, ArrowRightLeft, Lock, Minimize, Wand2, Keyboard, Shield, Target, Bot, RotateCw, Globe, Hash, Edit3, Crop, Copyright } from 'lucide-react';
+import { Camera, FileSignature, Image as ImageIcon, FileType, Calculator, Search, Zap, Info, FileImage, Landmark, FileSpreadsheet, ArrowRightLeft, Lock, Minimize, Wand2, Keyboard, Shield, Target, Bot, RotateCw, Globe, Hash, Edit3, Crop, Copyright, Video } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import AdSlot from '../components/AdSlot';
@@ -85,6 +85,7 @@ const AllTools = () => {
     { title: 'PDF Compressor', icon: <Minimize size={32} className="text-accent" />, desc: 'Reduce PDF size for easy upload', link: '/pdf-compressor', category: 'PDF' },
     { title: 'BG Remover', icon: <Wand2 size={32} className="text-primary" />, desc: 'Remove photo background using on-device AI', link: '/bg-remover', category: 'Images' },
     { title: 'AI Website Builder', icon: <Bot size={32} className="text-primary" />, desc: 'Generate HTML/CSS websites using AI', link: '/ai-website-builder', category: 'AI Tools', featured: true },
+    { title: 'Video to PDF', icon: <Video size={32} className="text-secondary" />, desc: 'Convert video lectures and tutorials into printable PDF handouts', link: '/video-to-pdf', category: 'PDF', featured: true },
     { title: 'Watermark PDF', icon: <Copyright size={32} className="text-secondary" />, desc: 'Add custom text watermarks to your PDF', link: '/pdf-watermark', category: 'PDF' },
     { title: 'Rotate PDF', icon: <RotateCw size={32} className="text-accent" />, desc: 'Rotate single or multiple PDF documents at once', link: '/pdf-rotate', category: 'PDF' },
     { title: 'HTML to PDF', icon: <Globe size={32} className="text-primary" />, desc: 'Convert web page URL or HTML code to PDF', link: '/html-to-pdf', category: 'PDF' },

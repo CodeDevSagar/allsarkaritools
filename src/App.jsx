@@ -28,6 +28,7 @@ import PdfPageNumber from './pages/tools/PdfPageNumber';
 import PdfEdit from './pages/tools/PdfEdit';
 import PdfCrop from './pages/tools/PdfCrop';
 import SalarySlabs from './pages/tools/SalarySlabs';
+import VideoToPdf from './pages/tools/VideoToPdf';
 import AboutUs from './pages/AboutUs';
 
 // Legal Pages
@@ -81,6 +82,7 @@ const App = () => {
                 <Route path="/pdf-edit" element={<PdfEdit />} />
                 <Route path="/pdf-crop" element={<PdfCrop />} />
                 <Route path="/salary-slabs" element={<SalarySlabs />} />
+                <Route path="/video-to-pdf" element={<VideoToPdf />} />
                 
                 {/* Legal Routes */}
                 <Route path="/about-us" element={<AboutUs />} />

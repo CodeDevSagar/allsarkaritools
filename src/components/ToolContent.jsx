@@ -488,6 +488,28 @@ const toolContentDb = {
       { q: 'Will modifying metadata affect the file signature?', a: 'If a PDF is cryptographically signed, any changes to metadata or contents will invalidate the digital signature, which is standard PDF behavior.' },
       { q: 'Is there a file size limit?', a: 'No, but large documents may take a few moments to compile in-browser.' }
     ]
+  },
+  'video-to-pdf': {
+    title: 'Video to PDF Converter',
+    desc: 'Convert lectures, online tutorials, presentations, and screen recordings into printable PDF handouts. Extract frames at custom time intervals or specify exact capture counts, preview extracted frames, and compile them into high-quality PDFs locally in your browser.',
+    steps: [
+      'Select and upload your video file (MP4, WebM, OGG, or MOV format).',
+      'Select your frame capture mode: "Capture Every N Seconds" or "Capture Exactly N Frames".',
+      'Configure the desired time intervals or target frame count in the settings panel.',
+      'Click "Extract Video Frames" to process the video locally in-browser.',
+      'Review extracted frames in the preview grid, delete any unwanted frames, configure your page orientation, and click "Compile To PDF Handout".'
+    ],
+    features: [
+      { name: 'Flexible Frame Capture', detail: 'Extract frames at fixed intervals (e.g. every 5 seconds) or specify a exact target frame count evenly spaced throughout the video.' },
+      { name: 'Interactive Frame Grid', detail: 'View all extracted frames, check their timestamps, and discard any blank or redundant frames before converting to PDF.' },
+      { name: 'Print-Ready Formatting', detail: 'Align pages in portrait or landscape orientations with standard A4 page dimensions and margins.' },
+      { name: '100% Client-Side Extraction', detail: 'All frame seeking, canvas drawing, and PDF compilation take place locally in JavaScript, ensuring zero data uploads.' }
+    ],
+    faqs: [
+      { q: 'Does this tool support audio or video streaming links?', a: 'This tool processes uploaded video files locally inside your browser sandbox to ensure maximum privacy. Streaming links are not supported directly to prevent security constraints.' },
+      { q: 'What is the maximum video file size I can upload?', a: 'You can upload files up to 100MB. Since all processing runs inside browser memory, larger files may cause browser tabs to refresh or lag on lower-spec devices.' },
+      { q: 'Will the final PDF contain audio or play videos?', a: 'No, PDF is a static document format. The tool extracts visual snapshots/keyframes from the video and compiles them as printable image pages in a PDF document.' }
+    ]
   }
 };
 
