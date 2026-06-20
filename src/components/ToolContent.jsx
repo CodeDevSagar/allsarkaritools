@@ -50,6 +50,28 @@ const toolContentDb = {
       { q: 'What is a "point" in PDF cropping?', a: 'In digital documents, PDF dimensions are calculated in points. 1 inch is equal to 72 points. A standard A4 page is approximately 595 x 842 points.' }
     ]
   },
+  'image-crop': {
+    title: 'Smart Image Cropper',
+    desc: 'Crop, rotate, and trim your photos to specific sizes or official aspect ratios (like 3:4 Passport, 1:1 Square, and 4:3 UPSC Exam Photo). This utility runs entirely inside your browser, guaranteeing that your personal photos never leave your device.',
+    steps: [
+      'Upload your image (JPG, PNG, or WebP) by dragging it into the editor.',
+      'Select a preset aspect ratio like Passport (3:4) or Square (1:1), or choose Free Crop.',
+      'Adjust the crop box handles to target the exact area of the image.',
+      'Click the "Rotate" button if you need to adjust orientation.',
+      'Click "Crop Selection" to generate a preview, then click "Download Cropped Photo" to save.'
+    ],
+    features: [
+      { name: 'Government Exam Presets', detail: 'Pre-configured cropping ratios for UPSC, SSC, banking, and state-level recruitment portals.' },
+      { name: 'Rotational Control', detail: 'Easily rotate images by 90-degree increments to fix sideways or upside-down uploads.' },
+      { name: '100% Client-Side', detail: 'Processed completely in the browser sandbox. No images are sent to external servers.' },
+      { name: 'HQ Canvas Extraction', detail: 'Uses high-quality sub-pixel rendering to extract crop areas without losing resolution.' }
+    ],
+    faqs: [
+      { q: 'What is the standard passport size photo aspect ratio?', a: 'For Indian government exams and passport applications, the standard aspect ratio is 3:4 (e.g. 3.5cm x 4.5cm). You can select our "Passport (3:4)" preset to crop it perfectly.' },
+      { q: 'Will my cropped photo lose its quality?', a: 'No. The cropper reads the original resolution (natural dimensions) of the image and crops based on relative coordinates, maintaining maximum pixel quality.' },
+      { q: 'Can I rotate and crop at the same time?', a: 'Yes. You can rotate the image first and then adjust the crop box to capture the desired portion.' }
+    ]
+  },
   'image-resizer': {
     title: 'Image Resizer & JPG to PNG Converter',
     desc: 'Resize, compress, and re-format photos to meet strict document guidelines for government portals (like SSC, UPSC, IBPS). Convert formats instantly (e.g. JPG to PNG, PNG to JPG, WebP) with precise quality and KB controls executing entirely inside your browser.',

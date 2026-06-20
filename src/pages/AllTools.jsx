@@ -95,6 +95,7 @@ const AllTools = () => {
     { title: 'Passport Photo Maker', icon: <Camera size={32} className="text-primary" />, desc: 'Standard passport, visa & exam photos', link: '/passport-photo-maker', category: 'Images' },
     { title: 'Signature Maker', icon: <FileSignature size={32} className="text-secondary" />, desc: 'Draw transparent signatures', link: '/signature-maker', category: 'Images' },
     { title: 'Image Resizer', icon: <ImageIcon size={32} className="text-accent" />, desc: 'Compress images below specific KB', link: '/image-resizer', category: 'Images' },
+    { title: 'Image Cropper', icon: <Crop size={32} className="text-[#00f2ff]" />, desc: 'Crop and rotate images to Passport or exam sizes', link: '/image-crop', category: 'Images', featured: true },
     
     // New Image Converters
     { title: 'JPG to PNG Converter', icon: <FileImage size={32} className="text-[#00f2ff]" />, desc: 'Convert JPG/JPEG images to transparent or solid PNG format locally', link: '/jpg-to-png', category: 'Images', featured: true },

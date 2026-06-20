@@ -33,6 +33,7 @@ import AboutUs from './pages/AboutUs';
 import JpgToPng from './pages/tools/JpgToPng';
 import PngToJpg from './pages/tools/PngToJpg';
 import VideoDownloaderSuite from './pages/tools/VideoDownloaderSuite';
+import ImageCropper from './pages/tools/ImageCropper';
 
 // New Dispatchers
 import YoutubeTool from './pages/tools/YoutubeTool';
@@ -80,6 +81,7 @@ const App = () => {
                 <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
                 <Route path="/jpg-to-png" element={<JpgToPng />} />
                 <Route path="/png-to-jpg" element={<PngToJpg />} />
+                <Route path="/image-crop" element={<ImageCropper />} />
                 <Route path="/video-tools" element={<VideoDownloaderSuite />} />
                 <Route path="/form-helper" element={<FormHelper />} />
                 <Route path="/office-tools" element={<OfficeTools />} />

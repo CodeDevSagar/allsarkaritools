@@ -23,8 +23,9 @@ const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 
 const COBALT_INSTANCES = [
-  'https://cobalt.sh',
   'https://api.cobalt.tools',
+  'https://co.wuk.sh',
+  'https://cobalt.sh',
   'https://cobalt.moe',
   'https://cobalt.tw',
   'https://cobalt.shin.co.at'
@@ -45,7 +46,17 @@ const VideoDownloaderSuite = () => {
         placement: 'topRight'
       });
 
-      const response = await fetch(url);
+      let response;
+      try {
+        response = await fetch(url);
+      } catch (directError) {
+        console.warn('Direct download blocked by CORS. Retrying via secure CORS proxy...', directError);
+        const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
+        response = await fetch(proxyUrl);
+      }
+
+      if (!response.ok) throw new Error('Proxy download failed');
+
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -63,7 +74,7 @@ const VideoDownloaderSuite = () => {
       });
     } catch (e) {
       console.error(e);
-      // Fallback: if fetch fails (e.g. CORS), open the direct media stream link
+      // Fallback: if proxy also fails, open the direct stream link
       window.open(url, '_blank');
       notification.warning({
         message: 'Manual Save Required',
@@ -86,55 +97,55 @@ const VideoDownloaderSuite = () => {
     setLoading(true);
     setDownloadResult(null);
 
+    const isAudio = activeTab === 'youtube' && quality === 'audio';
     const payload = {
       url: urlInput,
+      videoQuality: isAudio ? '720' : (quality || '1080'),
+      isAudioOnly: isAudio,
+      aFormat: 'mp3',
+      filenamePattern: 'classic'
     };
-
-    if (activeTab === 'youtube') {
-      if (quality === 'audio') {
-        payload.downloadMode = 'audio';
-      } else {
-        payload.downloadMode = 'video';
-        payload.videoQuality = quality;
-      }
-    } else {
-      payload.downloadMode = 'video';
-    }
 
     let success = false;
     
-    // Try to get direct download from cobalt instances first
+    // Try to get direct download from cobalt instances
     for (const baseUrl of COBALT_INSTANCES) {
-      try {
-        const response = await fetch(`${baseUrl}/api/json`, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
+      // Try both standard v7 root endpoint and v6 /api/json endpoint
+      const endpoints = [baseUrl, `${baseUrl}/api/json`];
+      
+      for (const endpoint of endpoints) {
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data && data.url) {
-            setDownloadResult({
-              url: data.url,
-              node: baseUrl.replace('https://', ''),
-              isFallback: false
-            });
-            success = true;
-            notification.success({
-              message: 'Success',
-              description: 'Download link generated! Click below to start download.',
-              placement: 'topRight'
-            });
-            break;
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.url) {
+              setDownloadResult({
+                url: data.url,
+                node: baseUrl.replace('https://', ''),
+                isFallback: false
+              });
+              success = true;
+              notification.success({
+                message: 'Success',
+                description: 'Download link generated! Click below to start download.',
+                placement: 'topRight'
+              });
+              break;
+            }
           }
+        } catch (err) {
+          console.warn(`Failed endpoint: ${endpoint}`, err);
         }
-      } catch (err) {
-        console.warn(`Failed instance: ${baseUrl}`, err);
       }
+      if (success) break;
     }
 
     if (!success) {
