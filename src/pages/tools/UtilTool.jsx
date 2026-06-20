@@ -372,11 +372,96 @@ const UtilTool = ({ type }) => {
         )}
       </Card>
 
-      <section className="text-left select-text relative z-10 space-y-6">
-        <h2 className="text-3xl font-black text-white uppercase">⚙️ Digital Utilities & Formatting Guide (1000 Words) 🚀</h2>
-        <p className="text-gray-400 leading-relaxed">
-          Security and client-side formatting keep user records clean, structured, and private. Generative password algorithms, text statistical counting systems, and multicolor QR code renderers operate entirely in browser context.
-        </p>
+      {/* SEO content */}
+      <section className="text-left select-text relative z-10 space-y-8 mt-16 p-8 bg-white/5 border border-white/10 rounded-2xl">
+        <h2 className="text-3xl font-black text-white uppercase tracking-tight border-b border-white/10 pb-4 flex items-center gap-3">
+          <Wand2 className="text-pink-500" />
+          General Utilities: Complete User Guide & How-To Instructions ⚙️
+        </h2>
+
+        <div className="space-y-6 text-gray-300">
+          <p className="leading-relaxed">
+            Sarkari Tools की इस General Utilities Suite में दैनिक जीवन, ब्लॉगिंग और सामान्य आईटी कार्यों को आसान बनाने के लिए 7 शक्तिशाली माइक्रो-टूल्स दिए गए हैं। ये टूल्स बेहद तेज़ हैं और आपके डेटा की गोपनीयता को बनाए रखने के लिए 100% ब्राउज़र में ही रन होते हैं।
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                Password Generator (सुरक्षित पासवर्ड बनाएं)
+              </h3>
+              <p className="text-sm text-gray-400">
+                सोशल मीडिया या बैंकिंग के लिए हैक-प्रूफ रैंडम पासवर्ड बनाएं।
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li>Slider से पासवर्ड की लंबाई (8 से 64 कैरेक्टर) चुनें।</li>
+                <li>Uppercase, Lowercase, Numbers, और Symbols के टिक बॉक्स सेट करें।</li>
+                <li><strong>Generate</strong> पर क्लिक करें और सुरक्षित पासवर्ड को कॉपी करें।</li>
+              </ul>
+            </div>
+
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                Word Counter (शब्द और वर्ण काउंटर)
+              </h3>
+              <p className="text-sm text-gray-400">
+                अपने निबंध, ब्लॉग पोस्ट या किसी भी टेक्स्ट के शब्द, कैरेक्टर, पैराग्राफ और अनुमानित पठन समय को लाइव ट्रैक करें।
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li>टेक्स्ट बॉक्स में लिखना या पेस्ट करना शुरू करें।</li>
+                <li>सभी आँकड़े रियल-टाइम में नीचे अपडेट होते रहेंगे।</li>
+              </ul>
+            </div>
+
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                Remove Duplicate Lines (डुप्लिकेट लाइन हटाएं)
+              </h3>
+              <p className="text-sm text-gray-400">
+                ईमेल लिस्ट, डेटा फाइल्स या किसी भी लाइन-बाय-लाइन लिस्ट से डुप्लिकेट एंट्रीज को एक क्लिक में साफ़ करें।
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li>अपनी लिस्ट को इनपुट बॉक्स में पेस्ट करें।</li>
+                <li>Case-Sensitive (अक्षर के आकार के अनुसार) विकल्प चुनें और <strong>Clean</strong> पर क्लिक करें।</li>
+              </ul>
+            </div>
+
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                Multicolor QR Code Generator
+              </h3>
+              <p className="text-sm text-gray-400">
+                वेबसाइट लिंक्स, वाईफाई पासवर्ड या टेक्स्ट के लिए सुंदर और कलरफुल QR कोड्स डिज़ाइन करें।
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li>वह टेक्स्ट या URL डालें जिसका QR कोड बनाना है।</li>
+                <li>Foreground (आगे का) और Background (पीछे का) रंग चुनें या हमारे 20 प्रीमियम प्रीसेट डिज़ाइन में से कोई एक चुनें।</li>
+                <li><strong>Generate</strong> पर क्लिक करके नया डिज़ाइन लोड करें।</li>
+              </ul>
+            </div>
+
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                Lorem Ipsum & Color Picker
+              </h3>
+              <p className="text-sm text-gray-400">
+                डिजाइनिंग और कोडिंग से जुड़े टूल्स:
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li><strong>Lorem Ipsum Generator:</strong> मॉकअप डिज़ाइन के लिए रैंडम प्लेसहोल्डर पैराग्राफ जनरेट करें।</li>
+                <li><strong>Color Picker:</strong> कलर बॉक्स पर क्लिक करके किसी भी मनपसंद रंग का HEX कोड प्राप्त करें और कॉपी करें।</li>
+              </ul>
+            </div>
+
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                Currency Converter
+              </h3>
+              <p className="text-sm text-gray-400">
+                USD से INR या INR से USD जैसी मुद्राओं के मूल्यों को आसानी से बदलें और कन्वर्ट करें।
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );

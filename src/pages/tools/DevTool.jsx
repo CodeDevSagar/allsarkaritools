@@ -225,11 +225,73 @@ const DevTool = ({ type }) => {
         )}
       </Card>
 
-      <section className="text-left select-text relative z-10 space-y-6">
-        <h2 className="text-3xl font-black text-white uppercase">💻 Code Optimization & formatting Standards Guide (1000 Words) 🚀</h2>
-        <p className="text-gray-400 leading-relaxed">
-          Standard code beautification and minification are vital steps in browser payload rendering optimizations. Strip comments, whitespace characters, and layout paddings to optimize performance.
-        </p>
+      {/* SEO content */}
+      <section className="text-left select-text relative z-10 space-y-8 mt-16 p-8 bg-white/5 border border-white/10 rounded-2xl">
+        <h2 className="text-3xl font-black text-white uppercase tracking-tight border-b border-white/10 pb-4 flex items-center gap-3">
+          <Terminal className="text-cyan-400" />
+          Developer Suite: Complete User Guide & Formatting Standards 💻
+        </h2>
+
+        <div className="space-y-6 text-gray-300">
+          <p className="leading-relaxed">
+            Sarkari Tools की इस Developer Suite में कोडर्स, वेब डिजाइनर्स और डेवलपर्स के लिए सबसे आवश्यक यूटिलिटी टूल्स दिए गए हैं। ये सभी टूल्स 100% क्लाइंट-साइड (Browser-based) काम करते हैं, जिसका मतलब है कि आपका संवेदनशील कोड या डेटा किसी सर्वर पर नहीं भेजा जाता और पूरी तरह से सुरक्षित रहता है। आइए जानते हैं इन टूल्स का उपयोग कैसे करें:
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                JSON Formatter & Validator
+              </h3>
+              <p className="text-sm text-gray-400">
+                अव्यवस्थित (Minified) JSON कोड को पढ़ने योग्य और सुव्यवस्थित बनाने के लिए इसका उपयोग करें। यह किसी भी सिंटैक्स एरर को भी तुरंत डिटेक्ट कर लेता है।
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li>Input बॉक्स में अपना Raw JSON पेस्ट करें।</li>
+                <li>2 Spaces, 4 Spaces या Tab इंडेंटेशन चुनें।</li>
+                <li><strong>Format</strong> पर क्लिक करें। एरर होने पर एरर मैसेज शो होगा।</li>
+              </ul>
+            </div>
+
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                HTML & XML Beautifier
+              </h3>
+              <p className="text-sm text-gray-400">
+                HTML और XML फाइल्स का सही इंडेंटेशन अलाइन करने और कोड स्ट्रक्चर को साफ़-सुथरा बनाने के लिए इस टूल का उपयोग किया जाता है।
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li>Raw HTML/XML टैग्स इनपुट बॉक्स में डालें।</li>
+                <li><strong>Beautify</strong> पर क्लिक करें, यह टैग्स को नेस्टेड अलाइनमेंट प्रदान करेगा।</li>
+              </ul>
+            </div>
+
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                CSS Minifier & Beautifier
+              </h3>
+              <p className="text-sm text-gray-400">
+                CSS कोड को सुन्दर बनाने (Beautify) या प्रोडक्शन के लिए कॉम्पैक्ट (Minify) करने के दो अलग विकल्प मिलते हैं।
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li><strong>Minify CSS:</strong> फालतू स्पेस, कमेंट्स और न्यूलाइन्स हटाकर फाइल साइज़ कम करता है।</li>
+                <li><strong>Beautify CSS:</strong> कोड को क्लीन कर पढ़ने और एडिट करने योग्य बनाता है।</li>
+              </ul>
+            </div>
+
+            <div className="p-5 bg-white/5 border border-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                Meta Tag Generator
+              </h3>
+              <p className="text-sm text-gray-400">
+                अपनी वेबसाइट का Google SEO और Social Media Preview (Open Graph) ऑप्टिमाइज़ करने के लिए मेटा टैग्स बनाएं।
+              </p>
+              <ul className="list-disc list-inside text-xs text-gray-400 mt-2 space-y-1">
+                <li>Title, Description, Keywords और Author का नाम भरें।</li>
+                <li>Generate पर क्लिक करें और जनरेट कोड को वेबसाइट के <code>&lt;head&gt;</code> सेक्शन में पेस्ट करें।</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
