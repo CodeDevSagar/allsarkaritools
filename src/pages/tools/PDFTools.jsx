@@ -5,6 +5,7 @@ import { PDFDocument } from 'pdf-lib';
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import { downloadFile } from '../../utils/downloadHelper';
+import ToolContent from '../../components/ToolContent';
 
 // Configure PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
@@ -204,16 +205,7 @@ const PDFTools = () => {
         )}
       </Card>
 
-      <div className="mt-12 flex items-start gap-4 p-8 glass-card bg-primary/5 border-none">
-        <Shield size={32} className="text-primary mt-1 shrink-0" />
-        <div>
-          <Text className="text-white font-bold block mb-2 text-lg">Privacy Guaranteed</Text>
-          <Text className="text-gray-500">
-            Your files are processed 100% locally in your browser. 
-            No content is ever uploaded to any server.
-          </Text>
-        </div>
-      </div>
+      <ToolContent toolKey="pdf-tools" />
     </div>
   );
 };

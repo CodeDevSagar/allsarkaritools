@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Card, Upload, Button, Typography, Row, Col, Space, message, Progress, Tag } from 'antd';
 import { Wand2, Download, Shield, ImageIcon, Layers, RefreshCw, CheckCircle } from 'lucide-react';
 import { removeBackground } from '@imgly/background-removal';
+import ToolContent from '../../components/ToolContent';
 
 const { Title, Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -252,6 +253,8 @@ const BgRemover = () => {
           </div>
         </Col>
       </Row>
+
+      <ToolContent toolKey="bg-remover" />
     </div>
   );
 };

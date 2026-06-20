@@ -3,6 +3,7 @@ import { Card, Upload, Button, Typography, Row, Col, Space, message, Select, Div
 import { Download, Scissors, User, Info, Check, Shield, Printer, Grid } from 'lucide-react';
 import { resizeImageClient } from '../../utils/imageProcessor';
 import { downloadFile } from '../../utils/downloadHelper';
+import ToolContent from '../../components/ToolContent';
 
 const { Title, Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -259,15 +260,10 @@ const PassportPhotoMaker = () => {
               )}
             </Space>
           </Card>
-
-          <div className="mt-8 flex items-center gap-4 p-6 glass-card border-none bg-primary/5">
-            <Shield size={24} className="text-primary shrink-0" />
-            <Text className="text-gray-500 text-sm">
-              AI-powered resizing with local encryption. Perfect for NEET, SSC, and UPSC portals.
-            </Text>
-          </div>
         </Col>
       </Row>
+
+      <ToolContent toolKey="passport-photo-maker" />
     </div>
   );
 };

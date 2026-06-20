@@ -3,6 +3,7 @@ import { Card, Upload, Button, Typography, Space, message, Input, Row, Col, Sele
 import { FileText, Download, Plus, Shield, Check, Crop } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import { downloadFile } from '../../utils/downloadHelper';
+import ToolContent from '../../components/ToolContent';
 
 const { Title, Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -213,15 +214,7 @@ const PdfCrop = () => {
         </Col>
       </Row>
 
-      <div className="mt-12 flex items-start gap-4 p-8 glass-card bg-primary/5 border-none">
-        <Shield size={32} className="text-primary mt-1 shrink-0" />
-        <div>
-          <Text className="text-white font-bold block mb-2 text-lg">100% In-Browser Crop</Text>
-          <Text className="text-gray-500">
-            Page dimensions and crop boxes are modified instantly inside your web browser sandbox using `pdf-lib` binary processing.
-          </Text>
-        </div>
-      </div>
+      <ToolContent toolKey="pdf-crop" />
     </div>
   );
 };

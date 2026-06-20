@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, DatePicker, Button, Typography, Row, Col, Space, Divider, Statistic, Tag } from 'antd';
 import { Calculator, Calendar, Clock, RefreshCcw, Info, Shield, Check } from 'lucide-react';
 import dayjs from 'dayjs';
+import ToolContent from '../../components/ToolContent';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -134,19 +135,7 @@ const AgeCalculator = () => {
         </Col>
       </Row>
 
-      {/* Info Section */}
-      <div className="mt-12 p-8 glass-card border-none bg-white/2 flex flex-col md:flex-row gap-8 items-center">
-        <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center shrink-0">
-          <Shield size={32} className="text-gray-400" />
-        </div>
-        <div>
-          <Title level={4} className="!text-white !mb-2">Official Eligibility Note</Title>
-          <Paragraph className="!text-gray-500 !m-0">
-            Most government notifications (SSC, UPSC, RRB) specify a cutoff date for age calculation. 
-            Ensure you set the "Cutoff Date" exactly as mentioned in the official PDF notification to verify your eligibility accurately.
-          </Paragraph>
-        </div>
-      </div>
+      <ToolContent toolKey="age-calculator" />
     </div>
   );
 };

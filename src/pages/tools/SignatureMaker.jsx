@@ -3,6 +3,7 @@ import { Card, Button, Space, Typography, Row, Col, message, Slider, Divider, Ta
 import { Eraser, Download, Shield, Palette, Type, Edit3, RotateCw } from 'lucide-react';
 import { Canvas, PencilBrush } from 'fabric';
 import { downloadFile } from '../../utils/downloadHelper';
+import ToolContent from '../../components/ToolContent';
 
 const { Text, Paragraph } = Typography;
 
@@ -394,6 +395,8 @@ const SignatureMaker = () => {
           )}
         </Col>
       </Row>
+
+      <ToolContent toolKey="signature-maker" />
     </div>
   );
 };

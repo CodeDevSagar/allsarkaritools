@@ -3,6 +3,7 @@ import { Card, Upload, Button, Typography, Row, Col, Space, InputNumber, Select,
 import { Download, ImageIcon, Ruler, Zap, Shield, Check, Info } from 'lucide-react';
 import { resizeImageClient } from '../../utils/imageProcessor';
 import { downloadFile } from '../../utils/downloadHelper';
+import ToolContent from '../../components/ToolContent';
 
 const { Title, Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -179,14 +180,10 @@ const ImageResizer = () => {
             </Space>
           </Card>
 
-          <div className="mt-8 flex items-center gap-4 p-6 glass-card border-none bg-primary/5">
-            <Shield size={24} className="text-primary shrink-0" />
-            <Text className="text-gray-500 text-sm">
-              Your images never leave your device. 100% Secure.
-            </Text>
-          </div>
         </Col>
       </Row>
+
+      <ToolContent toolKey="image-resizer" />
     </div>
   );
 };

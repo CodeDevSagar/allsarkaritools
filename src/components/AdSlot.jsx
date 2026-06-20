@@ -21,7 +21,7 @@ const AdSlot = ({ slot, style, format = 'auto', responsive = 'true' }) => {
         <ins 
           className="adsbygoogle"
           style={style || { display: 'block' }}
-          data-ad-client="ca-pub-0000000000000000"
+          data-ad-client="ca-pub-9142155023430073"
           data-ad-slot={slot || "0000000000"}
           data-ad-format={format}
           data-full-width-responsive={responsive}
