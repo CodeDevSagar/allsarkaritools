@@ -139,14 +139,25 @@ const UtilTool = ({ type }) => {
   const handleCurrency = () => {
     const amt = parseFloat(amount);
     if (isNaN(amt) || amt <= 0) return message.warning('Enter valid amount');
-    const rates = {
-      USD: { INR: 86.5, EUR: 0.92, GBP: 0.78 },
-      INR: { USD: 0.012, EUR: 0.011, GBP: 0.009 }
-    };
-    const rate = rates[fromCurr]?.[toCurr] || 1;
-    const res = amt * rate;
-    setCurrencyResult(`${amt} ${fromCurr} = ${res.toFixed(2)} ${toCurr}`);
-    message.success('Currency converted! 💰');
+    setLoading(true);
+
+    fetch(`https://open.er-api.com/v6/latest/${fromCurr}`)
+      .then(res => res.json())
+      .then(data => {
+        setLoading(false);
+        if (data && data.rates && data.rates[toCurr]) {
+          const rate = data.rates[toCurr];
+          const resVal = amt * rate;
+          setCurrencyResult(`${amt} ${fromCurr} = ${resVal.toFixed(2)} ${toCurr}`);
+          message.success('Currency converted live! 💰');
+        } else {
+          message.error('Failed to retrieve live exchange rate.');
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        message.error('Network error fetching live exchange rates.');
+      });
   };
 
   const handleGenerateQR = () => {
@@ -247,19 +258,35 @@ const UtilTool = ({ type }) => {
                 <Input type="number" value={amount} onChange={e => setAmount(e.target.value)} className="!bg-white/5 !border-white/10 !text-white" />
               </Col>
               <Col xs={12} sm={6}>
-                <select value={fromCurr} onChange={e => setFromCurr(e.target.value)} className="w-full p-2 h-10 bg-gray-800 border border-cyan-500/50 rounded-lg text-white">
-                  <option value="USD">USD</option>
-                  <option value="INR">INR</option>
+                <select value={fromCurr} onChange={e => setFromCurr(e.target.value)} className="w-full p-2 h-10 bg-[#0c0721] border border-cyan-500/50 rounded-lg text-white font-bold cursor-pointer">
+                  <option value="USD">🇺🇸 USD (US Dollar)</option>
+                  <option value="INR">🇮🇳 INR (Indian Rupee)</option>
+                  <option value="EUR">🇪🇺 EUR (Euro)</option>
+                  <option value="GBP">🇬🇧 GBP (British Pound)</option>
+                  <option value="CAD">🇨🇦 CAD (Canadian Dollar)</option>
+                  <option value="AUD">🇦🇺 AUD (Australian Dollar)</option>
+                  <option value="AED">🇦🇪 AED (UAE Dirham)</option>
+                  <option value="JPY">🇯🇵 JPY (Japanese Yen)</option>
+                  <option value="SAR">🇸🇦 SAR (Saudi Riyal)</option>
+                  <option value="SGD">🇸🇬 SGD (Singapore Dollar)</option>
                 </select>
               </Col>
               <Col xs={12} sm={6}>
-                <select value={toCurr} onChange={e => setToCurr(e.target.value)} className="w-full p-2 h-10 bg-gray-800 border border-cyan-500/50 rounded-lg text-white">
-                  <option value="INR">INR</option>
-                  <option value="USD">USD</option>
+                <select value={toCurr} onChange={e => setToCurr(e.target.value)} className="w-full p-2 h-10 bg-[#0c0721] border border-cyan-500/50 rounded-lg text-white font-bold cursor-pointer">
+                  <option value="INR">🇮🇳 INR (Indian Rupee)</option>
+                  <option value="USD">🇺🇸 USD (US Dollar)</option>
+                  <option value="EUR">🇪🇺 EUR (Euro)</option>
+                  <option value="GBP">🇬🇧 GBP (British Pound)</option>
+                  <option value="CAD">🇨🇦 CAD (Canadian Dollar)</option>
+                  <option value="AUD">🇦🇺 AUD (Australian Dollar)</option>
+                  <option value="AED">🇦🇪 AED (UAE Dirham)</option>
+                  <option value="JPY">🇯🇵 JPY (Japanese Yen)</option>
+                  <option value="SAR">🇸🇦 SAR (Saudi Riyal)</option>
+                  <option value="SGD">🇸🇬 SGD (Singapore Dollar)</option>
                 </select>
               </Col>
               <Col xs={24} sm={4}>
-                <Button type="primary" size="large" onClick={handleCurrency} className="neon-button w-full">Convert</Button>
+                <Button type="primary" size="large" onClick={handleCurrency} loading={loading} className="neon-button w-full">Convert</Button>
               </Col>
             </Row>
             {currencyResult && (
