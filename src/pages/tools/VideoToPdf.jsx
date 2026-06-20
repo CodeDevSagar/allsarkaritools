@@ -367,8 +367,8 @@ const VideoToPdf = () => {
     <div className="max-w-7xl mx-auto py-24 px-4 min-h-screen">
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full mb-6 backdrop-blur-md">
-          <Video size={16} className="text-primary" />
-          <span className="text-xs font-bold text-gray-300 uppercase tracking-widest">Video Utility • 100% Secure</span>
+          <Bot size={16} className="text-primary" />
+          <span className="text-xs font-bold text-gray-300 uppercase tracking-widest">AI-Powered • 100% Private</span>
         </div>
         <h1 className="responsive-title !text-white !mb-4 tracking-tighter uppercase font-black">Video to PDF Converter</h1>
         <Paragraph className="!text-gray-400 text-lg sm:text-xl">
