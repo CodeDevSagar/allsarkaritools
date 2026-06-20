@@ -11,7 +11,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [isDemoVisible, setIsDemoVisible] = useState(false);
   const [liveUsers, setLiveUsers] = useState(18492);
-  const [totalFiles, setTotalFiles] = useState(3847910);
+  const [totalFiles, setTotalFiles] = useState(38910);
 
   useEffect(() => {
     const interval = setInterval(() => {
