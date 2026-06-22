@@ -210,8 +210,32 @@ const BirthdayCountdown = () => {
         <Col xs={24} md={20} lg={16}>
           <Card className="glass-card !p-8 text-center relative overflow-hidden">
             
-            {/* Girls Celebration Animation Icon */}
-            <GirlCelebrationAnimation />
+            {/* Dynamic Avatar display based on inputs */}
+            <div className="flex justify-center gap-6 mb-6">
+              {boyName.trim() && (
+                <motion.div 
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="relative"
+                >
+                  <img src="/avatar_boy.png" alt="Boy Avatar" className="w-24 h-24 rounded-full border-2 border-primary/50 shadow-lg object-cover" />
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-primary text-black text-[9px] font-black uppercase px-2 py-0.5 rounded-full">Boy</span>
+                </motion.div>
+              )}
+              
+              {!boyName.trim() && !girlName.trim() && <GirlCelebrationAnimation />}
+
+              {girlName.trim() && (
+                <motion.div 
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="relative"
+                >
+                  <img src="/avatar_girl.png" alt="Girl Avatar" className="w-24 h-24 rounded-full border-2 border-pink-500/50 shadow-lg object-cover" />
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-pink-500 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full">Girl</span>
+                </motion.div>
+              )}
+            </div>
 
             <Space direction="vertical" className="w-full" size="large">
               

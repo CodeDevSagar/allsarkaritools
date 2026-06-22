@@ -140,6 +140,28 @@ Calculate yours at AllSarkari Tools!`;
                     animate={{ opacity: 1, y: 0 }} 
                     className="space-y-6 pt-6 border-t border-white/5"
                   >
+                    {/* Avatars display */}
+                    <div className="flex justify-center gap-6 mb-4">
+                      <motion.div 
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="relative"
+                      >
+                        <img src="/avatar_boy.png" alt="Boy Avatar" className="w-20 h-20 rounded-full border-2 border-primary/50 shadow-lg object-cover" />
+                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-primary text-black text-[8px] font-black uppercase px-2 py-0.5 rounded-full truncate max-w-[80px]">{name1}</span>
+                      </motion.div>
+
+                      <div className="flex items-center text-red-500 animate-pulse text-2xl">❤️</div>
+
+                      <motion.div 
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="relative"
+                      >
+                        <img src="/avatar_girl.png" alt="Girl Avatar" className="w-20 h-20 rounded-full border-2 border-pink-500/50 shadow-lg object-cover" />
+                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-pink-500 text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full truncate max-w-[80px]">{name2}</span>
+                      </motion.div>
+                    </div>
                     <div className="relative inline-block">
                       <Progress 
                         type="circle" 
