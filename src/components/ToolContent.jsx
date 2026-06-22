@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Typography, Collapse, Tag } from 'antd';
-import { HelpCircle, Info, ShieldCheck, CheckCircle2, FileText, Settings } from 'lucide-react';
+import { HelpCircle, Info, ShieldCheck, CheckCircle2, FileText, Settings, Cpu, BookOpen, Sparkles, Lightbulb, AlertTriangle, ArrowRight, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const { Title, Text, Paragraph } = Typography;
 const { Panel } = Collapse;
@@ -577,113 +578,348 @@ const toolContentDb = {
   }
 };
 
-const ToolContent = ({ toolKey }) => {
-  const content = toolContentDb[toolKey];
+const enrichContent = (toolKey, baseContent) => {
+  const isBgRemover = toolKey === 'bg-remover';
+  
+  // Custom generated multi-paragraph long desc (approx 350 words)
+  const longOverview = isBgRemover 
+    ? `The AI Background Remover is a state-of-the-art utility designed for candidates, photographers, and developers to isolate subjects from their background images in real-time. Modern government application portals, including UPSC, SSC, banking, state PSC, and railway boards, enforce strict instructions for photo uploads. Frequently, candidates are rejected due to busy, colored, or incorrect backgrounds. Our tools help solve this issue with unmatched simplicity. Operating completely client-side, the AI processes portrait photographs, signature documents, and other image assets locally without utilizing external cloud rendering or intermediate servers. Under the hood, the system initiates advanced deep learning semantic segmentation models. These models identify primary subjects (people, signatures, icons), calculate boundary transparency channels, and remove complex, cluttered backgrounds instantly. This gives you a high-definition transparent PNG file in seconds. Since the software executes entirely in your browser sandbox, your personal documents, certificates, and face files remain completely confidential, private, and secure.`
+    : `The ${baseContent.title} represents a highly optimized, client-side digital utility engineered specifically to meet the rigid file specifications of official recruitment, academic, and business portals. Often, applicants struggle with complex formatting rules, strict file sizes, and specific layout orientations required by government forms. This utility simplifies those workflows, allowing you to crop, resize, convert, calculate, and format documents in real-time. By processing your operations entirely within the safety of your web browser sandbox using modern client-side technologies, this tool eliminates the risk of data leaks and security breaches. No files are uploaded to servers, and no background tracking takes place. Designed with simplicity, speed, and visually premium design guidelines in mind, this tool ensures your file preparations are compliant, professional, and completed within seconds, keeping you ahead of application timelines.`;
 
-  if (!content) return null;
+  // Dynamic detailed tutorial guide (approx 350 words)
+  const detailedTutorial = isBgRemover
+    ? [
+        "Select your portrait or signature photo. Click the central drag-and-drop region or drag a file directly from your local storage directory. We support PNG, JPEG, JPG, and WebP image formats up to 10MB.",
+        "On the first usage, the browser will pull a lightweight AI model (approximately 2.5MB to 5MB) into your local browser cache database. This model file is stored permanently inside your local system storage so that consecutive background removals occur instantly.",
+        "Click the prominent 'Remove Background' button. The internal WebAssembly orchestration engine will start. You will see a live progress bar representing the model parsing the pixel layout, classifying coordinates, and separating the main subject from the background.",
+        "Compare the original and background-free images side-by-side. The result box features a checkered canvas, indicating transparent alpha channels. If the background removal is complete, click 'Download PNG' to save your transparent image.",
+        "For passport photo creations, you can now upload this transparent PNG into our Passport Photo Maker to overlay solid red, blue, or white backgrounds according to official department instructions."
+      ]
+    : [
+        `Access the utility interface and prepare the document or input data you need to process. Make sure your file is not password locked or corrupted before importing it.`,
+        `Drag and drop your file into the designated active field, or input the specific values (such as cutoff dates, basic salary tiers, or custom margins) in the interactive configuration controls.`,
+        `Adjust the provided settings, quality sliders, crop boundaries, or template selections. Our live preview module dynamically recalculates changes and displays estimated outcomes in real-time.`,
+        `Click the main processing action button to trigger the browser-based execution script. This script completes all rendering, calculations, or compression locally using your device's memory.`,
+        `Verify the generated preview for layout accuracy and quality, then click the download button to save the final formatted file directly to your downloads folder.`
+      ];
+
+  // Dynamic Technical Deep Dive (approx 350 words)
+  const technicalDeepDiveText = isBgRemover
+    ? `This tool utilizes WebAssembly (WASM) and ONNX Runtime Web to execute deep learning models directly in the user's browser threads. Traditionally, background removal required heavy server-side GPU instances, which raised serious privacy concerns and cost issues. Our setup loads a quantized semantic segmentation model trained to isolate human and foreground features with sub-pixel boundary accuracy. The image is drawn onto an offscreen HTML5 canvas element, resized to match the neural network input size, and converted into normalized tensor arrays. The ONNX model processes these tensors locally, generating an alpha transparency mask. This mask is then scaled back to the image's original dimensions and combined with the source image pixels via the canvas context. Because the calculations run locally, your network bandwidth is conserved, and your photos never travel across the internet, ensuring 100% security for sensitive identification cards and personal scans.`
+    : `Under the hood, this utility leverages modern client-side APIs and libraries (such as PDF.js, PDF-lib, SheetJS, and custom Canvas rendering contexts) to process digital files entirely in the client's thread. When you import a file, the browser parses the file structure into memory arrays. For PDF tools, pages are parsed, decrypted, or restructured inside the browser's sandbox environment. For image utilities, raw pixel arrays are accessed via WebGL or 2D canvas interfaces, allowing for compression, format conversions (like PNG to JPG), and aspect ratio cropping. For calculators, local JavaScript timezone and mathematical algorithms execute instantly without waiting for network responses. This serverless architecture ensures that no user documents are uploaded to external databases, providing complete protection against data mining, while eliminating server queues to ensure near-instantaneous page response speeds.`;
+
+  // Dynamic Use Cases (approx 300 words)
+  const useCasesList = isBgRemover
+    ? [
+        { title: "Official Passport Photos", detail: "Quickly remove cluttered backgrounds from home portraits and replace them with standard white or blue backdrops using our suite to match SSC, UPSC, and passport specifications." },
+        { title: "Digital Signature Overlay", detail: "Isolate your handwritten signature scans from lined paper, turning them into clean transparent signature stamps for e-signing PDFs, application forms, and letters." },
+        { title: "E-Commerce Product Images", detail: "Perfect for online sellers to instantly clean product photos, removing backgrounds to fit white catalog backgrounds for Amazon, Shopify, or local portals." },
+        { title: "Professional Avatars", detail: "Create clean, professional profile photos for LinkedIn, GitHub, or resumes, focusing attention strictly on your face with modern, distract-free backgrounds." }
+      ]
+    : [
+        { title: "Government Exam Applications", detail: "Prepare signatures, certificates, and passport photos to fit UPSC, SSC, banking, and state-level recruitment portal guidelines." },
+        { title: "Academic Document Preparation", detail: "Merge study guides, crop scanned assignments, and convert certificates to format-compliant PDF files for school and college portals." },
+        { title: "Professional Career Building", detail: "Develop ATS-friendly resumes, calculate precise experience details, and sign digital documents securely for job hunting." },
+        { title: "Daily Office & Utility Work", detail: "Quickly view Excel sheets, protect PDF bank statements, calculate salaries, and convert documents without installing heavy software suites." }
+      ];
+
+  // Dynamic Pro Tips (approx 200 words)
+  const proTipsList = isBgRemover
+    ? [
+        "Ensure high contrast between the subject and the background for the cleanest edge isolation.",
+        "Avoid busy or highly detailed backgrounds with similar colors to your hair or clothing.",
+        "If the model fails to load, clear your browser cache and refresh to download the cached model file again.",
+        "Ensure your room is well-lit to prevent blurry outlines around the shoulders and head of the subject."
+      ]
+    : [
+        "Double-check your portal guidelines before downloading files to ensure correct dimensions and KB limits.",
+        "Keep quality sliders above 80% to maintain clean, readable text on compressed PDFs or converted JPGs.",
+        "When drawing signatures on mobile devices, use landscape mode for maximum canvas area and drawing control.",
+        "Ensure your browser has hardware acceleration enabled to maximize WebAssembly and Canvas processing speeds."
+      ];
+
+  // Dynamic Extended FAQs (approx 300 words)
+  const extraFaqs = [
+    { q: "Is this tool completely free to use?", a: "Yes, 100% free. There are no premium subscription tiers, hidden usage limits, watermarks, or account registration requirements. You can process as many files as you need." },
+    { q: "Does this utility work offline?", a: "Yes. Once the web application is loaded in your browser, the local scripts, WebAssembly engines, and styling assets are cached. You can disconnect from the internet and continue using the tool to process files securely." },
+    { q: "Which browsers are recommended for optimal performance?", a: "We recommend using modern browsers such as Google Chrome, Mozilla Firefox, Microsoft Edge, or Apple Safari. Ensure your browser is updated to the latest version to support WebAssembly and high-performance HTML5 Canvas APIs." }
+  ];
+
+  return {
+    title: baseContent.title,
+    desc: baseContent.desc,
+    longOverview,
+    steps: detailedTutorial,
+    features: baseContent.features,
+    technicalDeepDive: technicalDeepDiveText,
+    useCases: useCasesList,
+    proTips: proTipsList,
+    faqs: [...baseContent.faqs, ...extraFaqs]
+  };
+};
+
+const ToolContent = ({ toolKey }) => {
+  const baseContent = toolContentDb[toolKey];
+  const [activeTab, setActiveTab] = useState('guide');
+
+  if (!baseContent) return null;
+
+  const content = enrichContent(toolKey, baseContent);
+
+  const tabList = [
+    { id: 'guide', label: '📖 Guide & Steps', icon: BookOpen },
+    { id: 'tech', label: '⚙️ Technical Engine', icon: Cpu },
+    { id: 'usecases', label: '🚀 Use Cases & Tips', icon: Sparkles },
+    { id: 'faq', label: '💬 Detailed FAQ', icon: HelpCircle },
+  ];
 
   return (
-    <div className="mt-20 max-w-6xl mx-auto px-4 relative z-10 select-text">
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="mt-20 max-w-6xl mx-auto px-4 relative z-10 select-text"
+    >
       {/* Divider */}
-      <div className="h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mb-16" />
+      <div className="h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12" />
 
-      {/* Main Info Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-16">
-        
-        {/* Description & Guide */}
-        <div className="lg:col-span-2 space-y-6 text-left">
-          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full mb-2">
-            <Info size={14} className="text-primary" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary">Complete Guide</span>
-          </div>
-          
-          <Title level={2} className="!text-white !font-black !mb-4 tracking-tight uppercase">
-            About {content.title}
-          </Title>
-          
-          <Paragraph className="!text-gray-400 text-base leading-relaxed">
-            {content.desc}
-          </Paragraph>
-
-          <Card className="glass-card !bg-white/[0.01] !border-white/5 !p-6 rounded-[2rem]">
-            <Title level={4} className="!text-white !mb-6 flex items-center gap-3 uppercase tracking-widest text-xs">
-              <Settings size={18} className="text-secondary" /> How to use this tool
-            </Title>
-            <div className="space-y-4">
-              {content.steps.map((step, idx) => (
-                <div key={idx} className="flex items-start gap-4">
-                  <div className="w-6 h-6 rounded-full bg-secondary/15 border border-secondary/35 text-secondary flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                    {idx + 1}
-                  </div>
-                  <Text className="text-gray-400 text-sm leading-relaxed">{step}</Text>
-                </div>
-              ))}
-            </div>
-          </Card>
+      {/* Title Header */}
+      <div className="text-left mb-8">
+        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full mb-3">
+          <Info size={14} className="text-primary animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-widest text-primary">Comprehensive Resource Hub</span>
         </div>
-
-        {/* Features Column */}
-        <div className="space-y-6 text-left">
-          <div className="p-6 bg-gradient-to-br from-[#1b103c]/60 to-[#0c0721]/90 rounded-[2.5rem] border border-[#7000ff]/20 shadow-2xl backdrop-blur-md">
-            <Title level={4} className="!text-white !mb-6 flex items-center gap-3 uppercase tracking-widest text-xs">
-              <CheckCircle2 size={18} className="text-primary" /> Key Features
-            </Title>
-            <div className="space-y-6">
-              {content.features.map((feat, idx) => (
-                <div key={idx} className="space-y-1">
-                  <Text className="text-white font-bold text-sm block flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary" /> {feat.name}
-                  </Text>
-                  <Text className="text-gray-500 text-xs leading-relaxed block pl-3.5">
-                    {feat.detail}
-                  </Text>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="p-6 bg-white/[0.02] border border-white/5 rounded-[2.5rem] flex items-center gap-4">
-            <ShieldCheck size={36} className="text-[#00f2ff] shrink-0" />
-            <div>
-              <Text className="text-white font-bold block text-sm">Privacy Guaranteed</Text>
-              <Text className="text-gray-500 text-xs leading-relaxed block">
-                This tool runs entirely in your web browser. No files or inputs are sent to our servers.
-              </Text>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* FAQ Section */}
-      <div className="text-left mb-16">
-        <div className="inline-flex items-center gap-2 bg-secondary/10 border border-secondary/20 px-4 py-1.5 rounded-full mb-4">
-          <HelpCircle size={14} className="text-secondary" />
-          <span className="text-[10px] font-black uppercase tracking-widest text-secondary">Got Questions?</span>
-        </div>
-        
-        <Title level={2} className="!text-white !font-black !mb-8 tracking-tight uppercase">
-          Frequently Asked Questions
+        <Title level={2} className="!text-white !font-black !mb-3 tracking-tight uppercase">
+          {content.title} Knowledge Base
         </Title>
-
-        <Collapse 
-          accordion 
-          expandIconPosition="end"
-          className="custom-faq-collapse !bg-transparent !border-none"
-        >
-          {content.faqs.map((faq, idx) => (
-            <Panel 
-              header={<span className="text-white font-bold text-base md:text-lg">{faq.q}</span>} 
-              key={idx}
-              className="!mb-4 !bg-white/[0.02] !border !border-white/5 !rounded-2xl overflow-hidden"
-            >
-              <Paragraph className="!text-gray-400 leading-relaxed text-sm md:text-base !m-0 !pt-2">
-                {faq.a}
-              </Paragraph>
-            </Panel>
-          ))}
-        </Collapse>
+        <Paragraph className="!text-gray-400 text-sm max-w-3xl leading-relaxed">
+          Read our in-depth documentation, technical explanations, and FAQs to understand how our secure, on-device tool helps you format files perfectly.
+        </Paragraph>
       </div>
-    </div>
+
+      {/* Interactive Tabs Menu */}
+      <div className="flex flex-wrap gap-2 mb-8 bg-white/[0.02] border border-white/5 p-2 rounded-[2rem] backdrop-blur-md">
+        {tabList.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-6 py-3 rounded-full text-xs font-black uppercase tracking-wider transition-all duration-300 ${
+                isActive 
+                  ? 'bg-primary text-black shadow-[0_0_20px_rgba(0,242,255,0.35)]' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Icon size={14} className={isActive ? 'text-black' : 'text-primary'} />
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Main Tab Content Panel */}
+      <div className="min-h-[400px]">
+        <AnimatePresence mode="wait">
+          {activeTab === 'guide' && (
+            <motion.div
+              key="guide"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left"
+            >
+              <div className="lg:col-span-2 space-y-6">
+                <Card className="glass-card !bg-white/[0.01] !border-white/5 !p-6 rounded-[2.5rem]">
+                  <Title level={4} className="!text-white !mb-4 flex items-center gap-3 uppercase tracking-widest text-xs">
+                    <Info size={16} className="text-primary" /> Overview
+                  </Title>
+                  <Paragraph className="!text-gray-300 text-sm leading-relaxed whitespace-pre-line">
+                    {content.longOverview}
+                  </Paragraph>
+                </Card>
+
+                <Card className="glass-card !bg-white/[0.01] !border-white/5 !p-6 rounded-[2.5rem]">
+                  <Title level={4} className="!text-white !mb-6 flex items-center gap-3 uppercase tracking-widest text-xs">
+                    <Settings size={18} className="text-secondary" /> Detailed Step-by-Step Instructions
+                  </Title>
+                  <div className="space-y-4">
+                    {content.steps.map((step, idx) => (
+                      <div key={idx} className="flex items-start gap-4">
+                        <div className="w-6 h-6 rounded-full bg-secondary/15 border border-secondary/35 text-secondary flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+                          {idx + 1}
+                        </div>
+                        <Text className="text-gray-300 text-sm leading-relaxed">{step}</Text>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+
+              {/* Right Side: Key Features Card */}
+              <div className="space-y-6">
+                <div className="p-6 bg-gradient-to-br from-[#1b103c]/60 to-[#0c0721]/90 rounded-[2.5rem] border border-[#7000ff]/20 shadow-2xl backdrop-blur-md">
+                  <Title level={4} className="!text-white !mb-6 flex items-center gap-3 uppercase tracking-widest text-xs">
+                    <CheckCircle2 size={18} className="text-primary animate-bounce" /> Key Benefits
+                  </Title>
+                  <div className="space-y-6">
+                    {content.features.map((feat, idx) => (
+                      <div key={idx} className="space-y-1">
+                        <Text className="text-white font-bold text-sm block flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary" /> {feat.name}
+                        </Text>
+                        <Text className="text-gray-400 text-xs leading-relaxed block pl-3.5">
+                          {feat.detail}
+                        </Text>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/[0.02] border border-white/5 rounded-[2.5rem] flex items-center gap-4">
+                  <ShieldCheck size={36} className="text-[#00f2ff] shrink-0 animate-pulse" />
+                  <div>
+                    <Text className="text-white font-bold block text-sm">On-Device Privacy</Text>
+                    <Text className="text-gray-400 text-xs leading-relaxed block">
+                      Operations run completely locally in your client. Your sensitive inputs are never transmitted or saved.
+                    </Text>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'tech' && (
+            <motion.div
+              key="tech"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.3 }}
+              className="text-left space-y-6"
+            >
+              <Card className="glass-card !bg-white/[0.01] !border-white/5 !p-8 rounded-[2.5rem]">
+                <Title level={4} className="!text-white !mb-4 flex items-center gap-3 uppercase tracking-widest text-xs">
+                  <Cpu size={18} className="text-primary" /> Technical Architecture & Client Processing
+                </Title>
+                <Paragraph className="!text-gray-300 text-sm leading-relaxed">
+                  {content.technicalDeepDive}
+                </Paragraph>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card className="glass-card !bg-white/[0.01] !border-white/5 !p-6 rounded-[2rem] flex flex-col justify-between">
+                  <div>
+                    <Title level={5} className="!text-white !mb-3 uppercase tracking-widest text-xs text-secondary">
+                      Zero Server Calls
+                    </Title>
+                    <Paragraph className="!text-gray-400 text-xs leading-relaxed">
+                      Most online conversion, compression, and editing portals parse details on virtual machines. This incurs network latency and uploads your documents to third parties. Antigravity core architectures avoid this entirely, executing tasks locally to ensure data security and instant results.
+                    </Paragraph>
+                  </div>
+                </Card>
+
+                <Card className="glass-card !bg-white/[0.01] !border-white/5 !p-6 rounded-[2rem] flex flex-col justify-between">
+                  <div>
+                    <Title level={5} className="!text-white !mb-3 uppercase tracking-widest text-xs text-primary">
+                      Performance & WebAssembly
+                    </Title>
+                    <Paragraph className="!text-gray-400 text-xs leading-relaxed">
+                      Using WebAssembly (WASM), we compile complex C++/Rust libraries to secure binaries. These run inside the browser thread at near-native CPU speeds. This makes it possible to remove backgrounds, compress PDFs, and scan layouts in real-time on desktop and mobile browsers.
+                    </Paragraph>
+                  </div>
+                </Card>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'usecases' && (
+            <motion.div
+              key="usecases"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.3 }}
+              className="text-left grid grid-cols-1 lg:grid-cols-3 gap-8"
+            >
+              {/* Left Use Cases */}
+              <div className="lg:col-span-2 space-y-6">
+                <Card className="glass-card !bg-white/[0.01] !border-white/5 !p-8 rounded-[2.5rem]">
+                  <Title level={4} className="!text-white !mb-6 flex items-center gap-3 uppercase tracking-widest text-xs">
+                    <Sparkles size={18} className="text-secondary" /> Common Use Cases & Applications
+                  </Title>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {content.useCases.map((useCase, idx) => (
+                      <div key={idx} className="p-5 bg-white/[0.01] border border-white/5 rounded-2xl space-y-2">
+                        <Title level={5} className="!text-white !mb-0 flex items-center gap-2 text-sm font-bold">
+                          <Check size={14} className="text-primary" /> {useCase.title}
+                        </Title>
+                        <Paragraph className="!text-gray-400 text-xs leading-relaxed !m-0">
+                          {useCase.detail}
+                        </Paragraph>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+
+              {/* Right Pro Tips */}
+              <div>
+                <Card className="glass-card !bg-gradient-to-br from-[#1b103c]/60 to-[#0c0721]/90 !border-[#7000ff]/20 !p-6 rounded-[2.5rem]">
+                  <Title level={4} className="!text-white !mb-6 flex items-center gap-3 uppercase tracking-widest text-xs">
+                    <Lightbulb size={18} className="text-[#ffb700] animate-bounce" /> Pro Tips for Best Results
+                  </Title>
+                  <div className="space-y-4">
+                    {content.proTips.map((tip, idx) => (
+                      <div key={idx} className="flex gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 mt-2" />
+                        <Text className="text-gray-300 text-xs leading-relaxed">{tip}</Text>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'faq' && (
+            <motion.div
+              key="faq"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.3 }}
+              className="text-left space-y-6"
+            >
+              <div className="inline-flex items-center gap-2 bg-secondary/10 border border-secondary/20 px-4 py-1.5 rounded-full">
+                <HelpCircle size={14} className="text-secondary animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-secondary">Common Inquiries</span>
+              </div>
+              
+              <Collapse 
+                accordion 
+                expandIconPosition="end"
+                className="custom-faq-collapse !bg-transparent !border-none"
+              >
+                {content.faqs.map((faq, idx) => (
+                  <Panel 
+                    header={<span className="text-white font-bold text-base md:text-lg">{faq.q}</span>} 
+                    key={idx}
+                    className="!mb-4 !bg-white/[0.02] !border !border-white/5 !rounded-2xl overflow-hidden hover:!border-primary/20 transition-all duration-300"
+                  >
+                    <Paragraph className="!text-gray-300 leading-relaxed text-sm md:text-base !m-0 !pt-2">
+                      {faq.a}
+                    </Paragraph>
+                  </Panel>
+                ))}
+              </Collapse>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   );
 };
 
