@@ -575,6 +575,72 @@ const toolContentDb = {
       { q: 'How does the quality slider affect the final file size?', a: 'Lowering the quality compresses the image data more aggressively. A quality of 90% keeps the image looking sharp while significantly reducing file size. Settings below 50% will compress the file even more but might introduce pixelation.' },
       { q: 'Is there any risk of third parties accessing my photos?', a: 'None at all. The conversion runs inside your browser. No files are uploaded to any external server or stored on our side.' }
     ]
+  },
+  'gst-calculator': {
+    title: 'GST Calculator',
+    desc: 'Calculate Goods and Services Tax (GST) for trade transactions. Estimate tax inclusive and exclusive parameters instantly for standard slabs (5%, 12%, 18%, 28%).',
+    features: [
+      { name: 'Dual Calculator Mode', detail: 'Toggle between adding tax (GST Exclusive) or subtracting tax (GST Inclusive) easily.' },
+      { name: 'Full CGST / SGST Breakup', detail: 'View the standard 50-50 division of Central and State tax shares for transaction accounts.' }
+    ],
+    faqs: [
+      { q: 'What is GST?', a: 'GST (Goods and Services Tax) is an indirect tax applied in India on the supply of goods and services.' }
+    ]
+  },
+  'sip-calculator': {
+    title: 'SIP Calculator',
+    desc: 'Calculate the compound growth of Systematic Investment Plans (SIP) in mutual funds. Estimate interest maturity wealth values locally.',
+    features: [
+      { name: 'Precise Interest Formulas', detail: 'Uses standard compounding formulas to estimate future values based on annual returns.' },
+      { name: 'Est. Wealth Gains', detail: 'View total invested value compared to interest returns for visual growth comparison.' }
+    ],
+    faqs: [
+      { q: 'What is a SIP?', a: 'SIP (Systematic Investment Plan) is a method to invest a fixed sum regularly into mutual funds, taking advantage of compounding interest.' }
+    ]
+  },
+  'love-calculator': {
+    title: 'Love Calculator',
+    desc: 'Calculate relationship compatibility index between partners using fun name matching algorithms. Generates unique advice and share details.',
+    features: [
+      { name: 'Fun Compatibility Logic', detail: 'Processes name letter hashes to calculate match percentages and specific relationship quotes.' },
+      { name: 'Instant Share Results', detail: 'Allows sharing your compatibility score with your partner or on social media using Web Share APIs.' }
+    ],
+    faqs: [
+      { q: 'How is the score calculated?', a: 'The tool uses name character hashes to generate a deterministic, positive, and fun percentage compatibility score.' }
+    ]
+  },
+  'birthday-countdown': {
+    title: 'Birthday Countdown',
+    desc: 'Set a real-time countdown timer to track days, hours, and seconds left until your next birthday milestone.',
+    features: [
+      { name: 'Real-Time Ticking Timer', detail: 'Updates every second to show precisely how much time is left until your birthday celebration.' },
+      { name: 'Interactive Age Info', detail: 'Calculates your current age and details the age milestone you will reach on your next birthday.' }
+    ],
+    faqs: [
+      { q: 'How does it work?', a: 'Select your birth date. The tool calculates your next birthday based on current year/month/days, and runs a countdown timer.' }
+    ]
+  },
+  'seo-suite': {
+    title: 'SEO Tools Suite',
+    desc: 'Generate XML sitemaps, robots.txt directives, and prepare header meta tags to optimize website indexation and search visibility.',
+    features: [
+      { name: 'XML Sitemap Builder', detail: 'Create structured XML maps containing URL priorities, lastmod dates, and change frequencies.' },
+      { name: 'Robots.txt Builder', detail: 'Create Allow/Disallow indexing rules for specific search engine web crawlers.' }
+    ],
+    faqs: [
+      { q: 'What is a Sitemap?', a: 'A sitemap is an XML file that lists URLs for a site, allowing search engines to crawl the site more intelligently.' }
+    ]
+  },
+  'ai-suite': {
+    title: 'AI Utilities Suite',
+    desc: 'Access generative content helpers to write professional paragraphs, build creative stories, and find name meaning personality traits.',
+    features: [
+      { name: 'AI Writer Templates', detail: 'Generate articles or casual paragraphs based on custom keywords and tone selections.' },
+      { name: 'Story Genre Options', detail: 'Create fantasy, sci-fi, and mystery story drafts based on custom premise prompts.' }
+    ],
+    faqs: [
+      { q: 'Are these tools private?', a: 'Yes! The templates and algorithms execute entirely client-side. No content or text prompt is sent to external servers.' }
+    ]
   }
 };
 

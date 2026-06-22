@@ -120,6 +120,18 @@ const AllTools = () => {
     { title: 'Page Number', icon: <Hash size={32} className="text-secondary" />, desc: 'Add page numbers into PDF with custom styling', link: '/pdf-page-number', category: 'PDF' },
     { title: 'Edit PDF', icon: <Edit3 size={32} className="text-accent" />, desc: 'Modify PDF metadata fields and text overlays', link: '/pdf-edit', category: 'PDF' },
     { title: 'Crop PDF', icon: <Crop size={32} className="text-primary" />, desc: 'Crop PDF margins and page dimensions locally', link: '/pdf-crop', category: 'PDF' },
+    
+    // New Additions
+    { title: 'GST Calculator', icon: <Calculator size={32} className="text-[#ff007f]" />, desc: 'Calculate CGST, SGST, IGST inclusive and exclusive amounts', link: '/gst-calculator', category: 'Calculators', featured: true },
+    { title: 'SIP Calculator', icon: <Calculator size={32} className="text-[#00f2ff]" />, desc: 'Estimate the potential maturity returns of monthly Systematic Investment Plans', link: '/sip-calculator', category: 'Calculators', featured: true },
+    { title: 'Love Calculator', icon: <Wand2 size={32} className="text-pink-500" />, desc: 'Check relationship compatibility index and get fun advice', link: '/love-calculator', category: 'Calculators' },
+    { title: 'Birthday Countdown', icon: <Calculator size={32} className="text-yellow-400" />, desc: 'Track days, hours, and seconds left until your next birthday', link: '/birthday-countdown', category: 'Calculators' },
+    { title: 'SEO Tools Suite', icon: <Globe size={32} className="text-[#ff8c2b]" />, desc: 'Generate sitemaps, robots.txt, and prepare meta tags', link: '/seo-tools', category: 'AI Tools', featured: true },
+    { title: 'Sitemap Generator', icon: <Globe size={32} className="text-cyan-400" />, desc: 'Generate standard XML sitemaps for Google indexation', link: '/sitemap-generator', category: 'AI Tools' },
+    { title: 'Robots Generator', icon: <Globe size={32} className="text-blue-400" />, desc: 'Generate standard robots.txt configurations for search crawlers', link: '/robots-generator', category: 'AI Tools' },
+    { title: 'AI Writer', icon: <Bot size={32} className="text-[#7000ff]" />, desc: 'Generate professional articles and casual paragraphs using templates', link: '/ai-writer', category: 'AI Tools', featured: true },
+    { title: 'AI Story Generator', icon: <Bot size={32} className="text-purple-400" />, desc: 'Generate fantasy, sci-fi, and mystery story drafts locally', link: '/ai-story-generator', category: 'AI Tools' },
+    { title: 'Name Meaning Finder', icon: <Bot size={32} className="text-green-400" />, desc: 'Identify personality traits and lucky parameters from your name', link: '/name-meaning', category: 'AI Tools' },
   ];
 
   const categories = ['All', 'AI Tools', 'Practice', 'Images', 'PDF', 'Documents', 'Office', 'Calculators'];

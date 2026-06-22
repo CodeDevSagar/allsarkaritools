@@ -42,6 +42,13 @@ import UtilTool from './pages/tools/UtilTool';
 import YoutubeStudio from './pages/tools/YoutubeStudio';
 import DevSuite from './pages/tools/DevSuite';
 
+// New Interactive Tools
+import GstCalculator from './pages/tools/GstCalculator';
+import SipCalculator from './pages/tools/SipCalculator';
+import LoveCalculator from './pages/tools/LoveCalculator';
+import BirthdayCountdown from './pages/tools/BirthdayCountdown';
+import SeoSuite from './pages/tools/SeoSuite';
+import AiToolsSuite from './pages/tools/AiToolsSuite';
 
 // Legal Pages
 import PrivacyPolicy from './pages/legal/PrivacyPolicy';
@@ -117,6 +124,18 @@ const App = () => {
                 <Route path="/css-minifier" element={<DevSuite defaultTab="css" />} />
                 <Route path="/css-beautifier" element={<DevSuite defaultTab="css" />} />
                 <Route path="/meta-tag-generator" element={<DevSuite defaultTab="meta" />} />
+
+                {/* New Interactive & AI Tools */}
+                <Route path="/gst-calculator" element={<GstCalculator />} />
+                <Route path="/sip-calculator" element={<SipCalculator />} />
+                <Route path="/love-calculator" element={<LoveCalculator />} />
+                <Route path="/birthday-countdown" element={<BirthdayCountdown />} />
+                <Route path="/seo-tools" element={<SeoSuite />} />
+                <Route path="/sitemap-generator" element={<SeoSuite defaultTab="sitemap" />} />
+                <Route path="/robots-generator" element={<SeoSuite defaultTab="robots" />} />
+                <Route path="/ai-writer" element={<AiToolsSuite defaultTab="writer" />} />
+                <Route path="/ai-story-generator" element={<AiToolsSuite defaultTab="story" />} />
+                <Route path="/name-meaning" element={<AiToolsSuite defaultTab="name" />} />
 
                 {/* General Utilities */}
                 <Route path="/password-generator" element={<UtilTool type="password" />} />
