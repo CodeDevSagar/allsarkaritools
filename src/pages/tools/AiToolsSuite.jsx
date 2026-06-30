@@ -3,6 +3,7 @@ import { Card, Input, Button, Tabs, Space, Typography, Row, Col, Select, message
 import { Bot, Copy, RefreshCw, PenTool, Sparkles, BookOpen, Star, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ToolContent from '../../components/ToolContent';
+import { generateLocalStory } from '../../utils/localStoryEngine';
 
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -20,7 +21,9 @@ const AiToolsSuite = ({ defaultTab = 'writer' }) => {
 
   // AI Story Generator states
   const [storyPrompt, setStoryPrompt] = useState('');
-  const [genre, setGenre] = useState('fantasy');
+  const [genre, setGenre] = useState('Fantasy Story');
+  const [storyLang, setStoryLang] = useState('English');
+  const [storyLength, setStoryLength] = useState('short');
 
   // Name Meaning states
   const [userName, setUserName] = useState('');
@@ -71,15 +74,20 @@ const AiToolsSuite = ({ defaultTab = 'writer' }) => {
     setOutputText('');
 
     setTimeout(() => {
-      const stories = {
-        fantasy: `The whisper of ancient leaves echoed through the valley. When the traveler first thought about ${storyPrompt}, they didn't realize they held the key to the lost kingdom of Eldoria. Armed with nothing but a map of stars and an iron will, they marched toward the glowing mountains where legends were born.`,
-        scifi: `The neon grids of Neo-Tokyo flickered under the control of the central mainframe. The data capsule containing the core details of ${storyPrompt} was finally active. Across the starports, thrusters hummed in preparation. The galaxy was about to change forever.`,
-        mystery: `The rain beat heavily against the window of the old library. Detective Vance stared at the scrap of paper on his desk, which read: ${storyPrompt}. Every clue pointed to the clock tower, but the clock had stopped at exactly 3:15 AM.`,
-      };
-
-      setOutputText(stories[genre]);
-      setLoading(false);
-      message.success('Story generated! 📖');
+      try {
+        const storyOutput = generateLocalStory({
+          prompt: storyPrompt,
+          genre,
+          length: storyLength,
+          language: storyLang
+        });
+        setOutputText(storyOutput);
+        message.success('Story generated! 📖');
+      } catch (err) {
+        message.error('Failed to generate story.');
+      } finally {
+        setLoading(false);
+      }
     }, 1500);
   };
 
@@ -211,11 +219,11 @@ const AiToolsSuite = ({ defaultTab = 'writer' }) => {
                       <Button size="small" icon={<Copy size={12} />} onClick={() => handleCopy(outputText)} className="!bg-white/5 !border-white/10 !text-white">Copy Output</Button>
                     </div>
                     <TextArea 
-                      rows={10}
+                      rows={20}
                       value={outputText}
                       readOnly
                       placeholder="Your generated content will appear here..."
-                      className="!bg-white/[0.01] !border-white/10 !text-cyan-300 !rounded-xl font-mono text-sm leading-relaxed"
+                      className="!bg-white/[0.01] !border-white/10 !text-cyan-300 !rounded-xl font-mono text-sm leading-relaxed !min-h-[480px]"
                     />
                   </Col>
                 </Row>
@@ -241,13 +249,48 @@ const AiToolsSuite = ({ defaultTab = 'writer' }) => {
                       </div>
 
                       <div>
-                        <Text className="text-gray-400 font-bold block mb-2 uppercase text-[10px] tracking-widest">Genre</Text>
+                        <Text className="text-gray-400 font-bold block mb-2 uppercase text-[10px] tracking-widest">Story Genre</Text>
                         <Select value={genre} onChange={setGenre} className="w-full !bg-[#0c0721] !border-white/10 !text-white custom-select-glow">
-                          <Option value="fantasy">Fantasy</Option>
-                          <Option value="scifi">Sci-Fi</Option>
-                          <Option value="mystery">Mystery</Option>
+                          <Option value="Love Story">❤️ Love Story</Option>
+                          <Option value="Romantic Story">✨ Romantic Story</Option>
+                          <Option value="Friendship Story">🤝 Friendship Story</Option>
+                          <Option value="Family Story">🏠 Family Story</Option>
+                          <Option value="Motivational Story">🔥 Motivational Story</Option>
+                          <Option value="Adventure Story">🗺️ Adventure Story</Option>
+                          <Option value="Horror Story">👻 Horror Story</Option>
+                          <Option value="Mystery Story">🔍 Mystery Story</Option>
+                          <Option value="Thriller Story">⚡ Thriller Story</Option>
+                          <Option value="Fantasy Story">🦄 Fantasy Story</Option>
+                          <Option value="Historical Story">🏛️ Historical Story</Option>
+                          <Option value="War Story">🛡️ War Story</Option>
+                          <Option value="Science Fiction Story">🚀 Science Fiction Story</Option>
+                          <Option value="Biography Style Story">👤 Biography Style Story</Option>
+                          <Option value="Political Story">🗳️ Political Story</Option>
+                          <Option value="Educational Story">🎓 Educational Story</Option>
+                          <Option value="Children's Story">🧸 Children's Story</Option>
+                          <Option value="Business Story">📈 Business Story</Option>
+                          <Option value="Inspirational Story">💡 Inspirational Story</Option>
                         </Select>
                       </div>
+
+                      <Row gutter={16}>
+                        <Col span={12}>
+                          <Text className="text-gray-400 font-bold block mb-2 uppercase text-[10px] tracking-widest">Language</Text>
+                          <Select value={storyLang} onChange={setStoryLang} className="w-full !bg-[#0c0721] !border-white/10 !text-white">
+                            <Option value="English">🇬🇧 English</Option>
+                            <Option value="Hindi">🇮🇳 Hindi</Option>
+                            <Option value="Hinglish">🗣️ Hinglish</Option>
+                          </Select>
+                        </Col>
+                        <Col span={12}>
+                          <Text className="text-gray-400 font-bold block mb-2 uppercase text-[10px] tracking-widest">Length</Text>
+                          <Select value={storyLength} onChange={setStoryLength} className="w-full !bg-[#0c0721] !border-white/10 !text-white">
+                            <Option value="short">Short (~500 words)</Option>
+                            <Option value="medium">Medium (~1000 words)</Option>
+                            <Option value="long">Long (~2000+ words)</Option>
+                          </Select>
+                        </Col>
+                      </Row>
 
                       <Button type="primary" size="large" onClick={handleStoryGenerate} loading={loading} className="neon-button !w-full !h-14">
                         Generate Story
@@ -261,11 +304,11 @@ const AiToolsSuite = ({ defaultTab = 'writer' }) => {
                       <Button size="small" icon={<Copy size={12} />} onClick={() => handleCopy(outputText)} className="!bg-white/5 !border-white/10 !text-white">Copy Story</Button>
                     </div>
                     <TextArea 
-                      rows={10}
+                      rows={20}
                       value={outputText}
                       readOnly
                       placeholder="Your story will render here..."
-                      className="!bg-white/[0.01] !border-white/10 !text-pink-300 !rounded-xl font-mono text-sm leading-relaxed"
+                      className="!bg-white/[0.01] !border-white/10 !text-pink-300 !rounded-xl font-mono text-sm leading-relaxed !min-h-[480px]"
                     />
                   </Col>
                 </Row>

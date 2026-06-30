@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Input, Button, Space, Typography, Row, Col, Checkbox, Slider, message, Tag } from 'antd';
 import { Settings, Copy, Download, Layers, FileText, Globe, Landmark, Lock, Wand2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -210,7 +211,16 @@ const UtilTool = ({ type }) => {
               <div className="p-6 bg-white/5 border border-white/10 rounded-3xl text-center space-y-4">
                 <Text className="text-gray-400 block text-xs">Generated Password</Text>
                 <div className="p-4 bg-black/40 rounded-xl font-mono text-lg text-primary select-all break-all min-h-[50px]">{outputText || 'Click Generate'}</div>
-                {outputText && <Button onClick={() => handleCopy(outputText)}>Copy</Button>}
+                {outputText && (
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleCopy(outputText)}
+                    className="mt-2 w-full py-2.5 bg-primary/20 border border-primary/30 text-primary rounded-xl hover:bg-primary/30 transition-all font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Copy size={14} /> Copy Password
+                  </motion.button>
+                )}
               </div>
             </Col>
           </Row>
@@ -218,7 +228,7 @@ const UtilTool = ({ type }) => {
 
         {type === 'counter' && (
           <Space direction="vertical" className="w-full" size="large">
-            <TextArea rows={8} value={inputText} onChange={handleWordCounter} placeholder="Paste your text here to count..." className="!bg-white/5 !border-white/10 !text-white text-base" />
+            <TextArea rows={12} value={inputText} onChange={handleWordCounter} placeholder="Paste your text here to count..." className="!bg-white/5 !border-white/10 !text-white text-base !min-h-[300px]" />
             <Row gutter={[16, 16]} className="text-center">
               {[{ label: "Words", val: stats.words }, { label: "Chars", val: stats.chars }, { label: "Paras", val: stats.paras }, { label: "Reading Time", val: `${stats.wpm} Min` }].map((s, idx) => (
                 <Col xs={12} sm={6} key={idx}>
@@ -235,7 +245,7 @@ const UtilTool = ({ type }) => {
         {type === 'duplicates' && (
           <Row gutter={[24, 24]}>
             <Col xs={24} md={12}>
-              <TextArea rows={10} value={inputText} onChange={e => setInputText(e.target.value)} placeholder="Line 1&#10;Line 2&#10;Line 1" className="!bg-white/5 !border-white/10 !text-white text-sm" />
+              <TextArea rows={16} value={inputText} onChange={e => setInputText(e.target.value)} placeholder="Line 1&#10;Line 2&#10;Line 1" className="!bg-white/5 !border-white/10 !text-white text-sm !min-h-[380px]" />
               <div className="flex gap-4 mt-4 align-center">
                 <Checkbox checked={caseSensitive} onChange={e => setCaseSensitive(e.target.checked)} className="!text-white">Case-Sensitive</Checkbox>
                 <Button type="primary" onClick={handleRemoveDuplicates} className="neon-button">Clean</Button>
@@ -244,9 +254,18 @@ const UtilTool = ({ type }) => {
             <Col xs={24} md={12}>
               <div className="flex justify-between items-center mb-2">
                 <Text className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">Result</Text>
-                <Button size="small" onClick={() => handleCopy(outputText)}>Copy</Button>
+                {outputText && (
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleCopy(outputText)}
+                    className="px-3 py-1 bg-primary/20 border border-primary/30 text-primary rounded-lg hover:bg-primary/30 transition-all font-bold text-xs flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Copy size={12} /> Copy Output
+                  </motion.button>
+                )}
               </div>
-              <TextArea rows={10} value={outputText} readOnly className="!bg-white/[0.01] !border-white/10 !text-primary text-sm" />
+              <TextArea rows={16} value={outputText} readOnly className="!bg-white/[0.01] !border-white/10 !text-primary text-sm !min-h-[380px]" />
             </Col>
           </Row>
         )}
@@ -308,7 +327,19 @@ const UtilTool = ({ type }) => {
               <Button type="primary" onClick={handleLorem} className="neon-button w-full">Generate</Button>
             </Col>
             <Col xs={24} md={16}>
-              <TextArea rows={8} value={outputText} readOnly className="!bg-white/5 !border-white/10 !text-gray-300" />
+              <div className="relative">
+                <TextArea rows={8} value={outputText} readOnly className="!bg-white/5 !border-white/10 !text-gray-300 md:!pr-16" />
+                {outputText && (
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleCopy(outputText)}
+                    className="w-full mt-[15px] md:absolute md:top-4 md:right-4 md:mt-0 md:w-auto px-3 py-1.5 bg-primary/20 border border-primary/30 text-primary rounded-xl hover:bg-primary/30 transition-all font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
+                  >
+                    <Copy size={12} /> Copy
+                  </motion.button>
+                )}
+              </div>
             </Col>
           </Row>
         )}
@@ -383,7 +414,14 @@ const UtilTool = ({ type }) => {
                 <input type="color" value={pickedColor} onChange={e => setPickedColor(e.target.value)} className="w-20 h-20 rounded-2xl border-0 cursor-pointer bg-transparent" />
                 <div>
                   <Text className="text-white font-mono text-xl block font-bold mb-2">{pickedColor.toUpperCase()}</Text>
-                  <Button size="small" onClick={() => handleCopy(pickedColor)}>Copy Hex</Button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleCopy(pickedColor)}
+                    className="px-3 py-1.5 bg-primary/20 border border-primary/30 text-primary rounded-xl hover:bg-primary/30 transition-all font-bold text-xs flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Copy size={12} /> Copy Hex
+                  </motion.button>
                 </div>
               </div>
             </Col>

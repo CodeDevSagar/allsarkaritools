@@ -85,14 +85,14 @@ const Home = () => {
       <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] bg-[#ff00c8]/5 rounded-full blur-[130px] pointer-events-none" />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 max-w-7xl mx-auto z-10">
+      <section className="relative pt-24 pb-20 px-6 md:px-12 lg:px-24 w-full z-10">
         <Row gutter={[48, 48]} align="middle">
           <Col xs={24} lg={12} className="text-left">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 bg-[#1b103c]/60 border border-[#7000ff]/30 px-5 py-2.5 rounded-full mb-8 backdrop-blur-md"
+              className="inline-flex items-center gap-2 bg-[#1b103c]/60 border border-[#7000ff]/30 px-5 py-2.5 rounded-full mb-[10px] backdrop-blur-md"
             >
               <Star size={16} className="text-[#ff3b7e] fill-[#ff3b7e]" />
               <span className="text-sm font-black text-gray-300 tracking-wider">TRUSTED BY 100K+ ASPIRANTS</span>
@@ -104,9 +104,9 @@ const Home = () => {
               transition={{ delay: 0.2, duration: 0.6 }}
             >
               <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-none mb-6">
-                <span className="text-[#ff3b7e] block mb-2 drop-shadow-[0_0_35px_rgba(255,59,126,0.3)]">Prepare.</span>
-                <span className="text-[#ff8c2b] block mb-2 drop-shadow-[0_0_35px_rgba(255,140,43,0.3)]">Convert.</span>
-                <span className="text-[#00f2ff] block drop-shadow-[0_0_35px_rgba(0,242,255,0.4)]">Succeed.</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff3b7e] to-[#ff8c2b] block mb-2 drop-shadow-[0_0_35px_rgba(255,59,126,0.25)]">Prepare.</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff8c2b] to-[#00f2ff] block mb-2 drop-shadow-[0_0_35px_rgba(255,140,43,0.25)]">Convert.</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f2ff] to-[#7000ff] block drop-shadow-[0_0_35px_rgba(0,242,255,0.3)]">Succeed.</span>
               </h1>
 
               <Paragraph className="!text-gray-400 text-lg sm:text-xl max-w-lg mb-10 leading-relaxed font-medium">
@@ -169,7 +169,7 @@ const Home = () => {
             </motion.div>
           </Col>
 
-          {/* Right Floating Rocket Illustration */}
+          {/* Right Floating Premium Vector Illustration */}
           <Col xs={24} lg={12} className="flex justify-center relative">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -178,11 +178,11 @@ const Home = () => {
               className="relative w-full max-w-[500px]"
             >
               {/* Spinning background platform glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#7000ff]/20 to-[#00f2ff]/20 rounded-full blur-[100px] animate-pulse pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#7000ff]/20 to-[#00f2ff]/20 rounded-full blur-[100px] pointer-events-none animate-pulse" />
               <motion.img
                 src="/hero_illustration.png"
-                alt="Sarkari Tools Rocket takeoff"
-                className="w-full h-auto z-10 relative object-contain drop-shadow-[0_20px_50px_rgba(112,0,255,0.4)]"
+                alt="Sarkari Tools Futuristic Vector Illustration"
+                className="w-full h-auto z-10 relative object-contain drop-shadow-[0_20px_50px_rgba(112,0,255,0.45)]"
                 animate={{
                   y: [0, -15, 0],
                 }}
@@ -328,6 +328,99 @@ const Home = () => {
             ))}
           </div>
 
+        </div>
+      </section>
+
+      {/* ── MASSIVE EDUCATIONAL CONTENT SECTION (AdSense & SEO Optimized) ── */}
+      <section className="py-20 px-6 relative z-10 max-w-7xl mx-auto text-left select-text">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mb-16" />
+        
+        <div className="space-y-12">
+          {/* Section 1 */}
+          <div className="space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight uppercase">
+              ⚡ Secure Online Tool Suite for State & National Exam Forms
+            </h2>
+            <p className="text-gray-300 leading-relaxed text-base">
+              Preparing for highly competitive national examinations like the **Union Public Service Commission (UPSC), Staff Selection Commission (SSC), National Eligibility cum Entrance Test (NEET), Joint Entrance Examination (JEE), Banking (IBPS, SBI PO), and various state PSC exams** is a demanding task. Beyond academic preparation, candidates face structural friction during online registration. Official registration portals require scanned passport photographs, digital signatures, and supporting certificates to be within extremely strict file sizes (e.g., photos between 20KB to 50KB, signatures under 20KB, and certificates formatted as PDFs under 200KB).
+            </p>
+            <p className="text-gray-300 leading-relaxed text-base">
+              Historically, students have had to resort to uploading their sensitive, personally identifiable information (PII) to random, unsecured online file compressors. This practice creates severe privacy risks, as servers can store credentials indefinitely. **AllSarkari Tools** was engineered to solve this vulnerability by offering a complete suite of utility converters that run **100% client-side**. This means that when you compress a PDF or crop a passport photo, all math and image processing are computed locally in your web browser sandbox. No file is ever sent to a remote server, offering you complete data safety.
+            </p>
+          </div>
+
+          {/* Section 2 */}
+          <div className="space-y-4">
+            <h3 className="text-2xl font-black text-[#00f2ff] tracking-tight uppercase">
+              🛠️ In-Depth Guide: How to Format and Align Documents for Government Portals
+            </h3>
+            <p className="text-gray-300 leading-relaxed text-base">
+              Understanding official guidelines is crucial to preventing application rejections. Most recruitment portals use automated computer systems to screen incoming documents. If a photograph has an incorrect background color, bad aspect ratio, or a file size exceeding the threshold, the form is rejected. Here is how you can utilize our tools to align your credentials properly:
+            </p>
+            <ul className="list-disc pl-6 space-y-3 text-gray-300">
+              <li>
+                <strong>Passport Photo Maker:</strong> Government applications generally require a recent passport photo (3.5 cm x 4.5 cm or 2 inches x 2 inches) with a light gray or plain white background. Our local tool lets you upload your portrait, remove cluttered backgrounds, and resize the output to match UPSC/SSC specifications.
+              </li>
+              <li>
+                <strong>Digital Signature Creator:</strong> Candidates must sign on white paper using a black ink pen, scan it, and crop it to fit specific coordinates (typically 3.5 cm width x 1.5 cm height). Using our signature Maker, you can sign directly on your touchscreen device or upload a photo of your signature, make the background transparent, and export it instantly.
+              </li>
+              <li>
+                <strong>PDF Merger & Security tools:</strong> If an application asks you to compile all semesters' mark sheets into a single PDF, our browser-based PDF compiler merges them in seconds. You can also encrypt files with secure passwords locally before uploading.
+              </li>
+              <li>
+                <strong>ATS-Friendly Resume Builder:</strong> Our resume creator uses structured templates that are easily parsed by Applicant Tracking Systems (ATS), giving you an edge in both public and private sector hiring pipelines.
+              </li>
+            </ul>
+          </div>
+
+          {/* Section 3: FAQs */}
+          <div className="space-y-6">
+            <h3 className="text-2xl font-black text-[#ff8c2b] tracking-tight uppercase">
+              ❓ Frequently Asked Questions (FAQs)
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  q: "How does AllSarkari Tools ensure my documents remain 100% private?",
+                  a: "Our website runs entirely in your browser sandbox using client-side JavaScript. Unlike other tools that upload files to their servers, our architecture compiles binaries locally on your device. Your photos, signatures, and certificates never travel over the network, making data leaks impossible."
+                },
+                {
+                  q: "What are the standard passport photo sizes for SSC and UPSC forms?",
+                  a: "The standard size is 3.5 cm width by 4.5 cm height (350px x 450px) with a file size limit of 20KB to 50KB. The photo must show your face clearly against a white or light background."
+                },
+                {
+                  q: "Why do I need transparent background signatures?",
+                  a: "A transparent signature merges smoothly into the official application form templates without white block borders, reducing automated scan failures."
+                },
+                {
+                  q: "Can I use these tools offline?",
+                  a: "Yes! Since the logic is client-side, once the page loads, you can disconnect from the internet and continue resizing, cropping, and converting files locally."
+                },
+                {
+                  q: "What is an ATS-friendly resume template?",
+                  a: "An ATS-friendly template avoids complex graphics or column layouts that confuse automated scanning software. It uses structured headings and clear formatting to ensure your qualifications are parsed correctly."
+                },
+                {
+                  q: "Is there any limit to the number of files I can process?",
+                  a: "No. Since all operations run locally on your device's processor, there are no subscription limits, caps, or hidden charges."
+                },
+                {
+                  q: "Will compressing a PDF degrade the quality of my certificates?",
+                  a: "Our algorithm optimizes the PDF file structure and scales down image resolution to fit limits (like under 200KB) while keeping texts fully legible."
+                },
+                {
+                  q: "Can I convert MS Word documents to PDF on a mobile device?",
+                  a: "Yes. Our universal converter runs locally in mobile browsers, making document conversions quick and simple without requiring MS Office."
+                }
+              ].map((faq, idx) => (
+                <div key={idx} className="p-6 bg-white/[0.02] border border-white/5 rounded-3xl space-y-2">
+                  <h4 className="text-white font-bold text-sm">💡 {faq.q}</h4>
+                  <p className="text-gray-400 text-xs leading-relaxed">{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

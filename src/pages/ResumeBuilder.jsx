@@ -1110,6 +1110,91 @@ const ResumeBuilder = () => {
             </div>
           </Modal>
         )}
+        {/* ── ATS RESUME COMPREHENSIVE SEO CONTENT SECTION (AdSense & SEO Optimized) ── */}
+        <section className="py-20 mt-16 border-t border-white/5 text-left select-text">
+          <div className="space-y-12 max-w-7xl mx-auto">
+            {/* Section 1 */}
+            <div className="space-y-4">
+              <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight uppercase">
+                💼 Ultimate Guide: How to Build a Professional ATS-Friendly Resume
+              </h2>
+              <p className="text-gray-300 leading-relaxed text-base">
+                Whether you are applying for private corporate roles, PSU hires, or government contracts, your resume is the very first point of contact with recruiters. In today's digital hiring landscape, more than 75% of resumes are screened by an **Applicant Tracking System (ATS)** before ever reaching a human resource manager. An ATS is an automated software application that parses resume content, filters candidates based on keywords, and ranks profiles by relevance. If your resume format is complex, uses unreadable fonts, or lacks structural tags, the scanner will fail to read it, leading to instant rejection.
+              </p>
+              <p className="text-gray-300 leading-relaxed text-base">
+                Our <strong>Resume Builder Pro</strong> is designed with custom ATS-friendly layouts that ensure your resume passes scanner parses cleanly. By using a single-column or clear table layout, standard system fonts, and logical section hierarchies, our templates allow text reading engines to extract details (experience, education, and skills) instantly.
+              </p>
+            </div>
+
+            {/* Section 2 */}
+            <div className="space-y-4">
+              <h3 className="text-2xl font-black text-[#00f2ff] tracking-tight uppercase">
+                📝 Essential Resume Sections and Best Practices
+              </h3>
+              <p className="text-gray-300 leading-relaxed text-base">
+                To build a strong resume, make sure you optimize the following core sections:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 text-gray-300">
+                <li>
+                  <strong>Contact Information:</strong> Include your full name, phone number, email address, and professional links (such as LinkedIn or GitHub). Avoid putting personal details like religion, age, or marital status unless explicitly requested by government portal applications.
+                </li>
+                <li>
+                  <strong>Professional Summary:</strong> A concise 3-4 sentence paragraph that highlights your primary skills, experience years, and career goals. Avoid generic statements and focus on quantitative metrics.
+                </li>
+                <li>
+                  <strong>Work Experience:</strong> List your roles in reverse chronological order. Use action verbs (such as Developed, Managed, Coordinated, Optimized) and include measurable achievements (e.g., 'Boosted server rendering efficiency by 25%').
+                </li>
+                <li>
+                  <strong>Education & Certifications:</strong> State your degree, institution name, graduation year, and GPA/CGPA. Add professional certifications (like AWS, PMP, or Cisco) to boost keyword match scores.
+                </li>
+                <li>
+                  <strong>Skills Matrix:</strong> Group your skills by category (e.g., Languages, Tools, Methodologies). This makes it easy for both scanners and recruiters to quickly assess your technical competencies.
+                </li>
+              </ul>
+            </div>
+
+            {/* Section 3: FAQs */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-black text-[#ff8c2b] tracking-tight uppercase">
+                ❓ Resume Builder FAQs
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  {
+                    q: "What makes a resume ATS-friendly?",
+                    a: "An ATS-friendly resume avoids decorative graphic columns, tables, headers, footers, or images. It uses standard text headers (Education, Experience) and clean system fonts (Arial, Times New Roman) that text parsers can read without errors."
+                  },
+                  {
+                    q: "Should I include my photograph on my resume?",
+                    a: "For most corporate and international applications, photographs are discouraged as they can trigger compliance issues regarding hiring bias. However, some specific government contract posts in India might ask for it. Choose Minimalist/Academic templates in those cases."
+                  },
+                  {
+                    q: "How long should my resume be?",
+                    a: "A standard, single-page resume is best for applicants with less than 5-8 years of experience. Keep descriptions criteria-oriented to fit standard sizes."
+                  },
+                  {
+                    q: "Can I edit my resume after downloading it?",
+                    a: "Our tool processes all inputs in real-time. You can fill out the form, click preview, adjust templates, and download a fresh PDF copy anytime."
+                  },
+                  {
+                    q: "Does this builder save my personal information?",
+                    a: "No. All details entered in our builder are processed locally in your browser memory. We do not host your information on databases, ensuring total data privacy."
+                  },
+                  {
+                    q: "How should I name my resume file before sending?",
+                    a: "Save your file as 'FullName_Resume.pdf' (e.g. Sagar_Kumar_Resume.pdf) instead of generic terms like 'resume.pdf' to help recruiters locate it easily."
+                  }
+                ].map((faq, idx) => (
+                  <div key={idx} className="p-6 bg-white/[0.02] border border-white/5 rounded-3xl space-y-2">
+                    <h4 className="text-white font-bold text-sm">💡 {faq.q}</h4>
+                    <p className="text-gray-400 text-xs leading-relaxed">{faq.a}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
       </motion.div>
     </div>
   );

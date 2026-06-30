@@ -17,6 +17,9 @@
       radial-gradient(at 0% 0%, rgba(112, 0, 255, 0.16) 0px, transparent 60%),
       radial-gradient(at 100% 0%, rgba(0, 242, 255, 0.16) 0px, transparent 60%),
       radial-gradient(at 50% 100%, rgba(255, 0, 200, 0.1) 0px, transparent 60%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
     min-height: 100vh;
     overflow-x: hidden;
   }
@@ -124,12 +127,87 @@ main p, main .ant-typography p, main .text-gray-400, main .text-gray-500 {
 /* Touch Device Optimizations */
 @media (max-width: 768px) {
   .glass-card {
-    padding: 1.5rem !important;
-    border-radius: 2rem !important;
+    padding: 1.25rem !important;
+    border-radius: 1.5rem !important;
   }
   
-  .neon-button {
-    height: 3.5rem !important;
-    font-size: 0.9rem !important;
+  /* Inputs & Selectors mobile tuning */
+  .ant-input, .ant-input-number, .ant-select-selector, .ant-picker, .ant-input-affix-wrapper {
+    font-size: 14px !important;
+    height: auto !important;
+    min-height: 46px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* Textareas should be large and legible on mobile */
+  textarea, .ant-input-textarea textarea {
+    font-size: 14px !important;
+    min-height: 220px !important;
+    padding: 12px !important;
+  }
+  
+  /* Shrink placeholder font size so text does not clip on mobile */
+  .ant-input::placeholder, .ant-input-number-input::placeholder, textarea::placeholder, input::placeholder {
+    font-size: 11px !important;
+    opacity: 0.75 !important;
+  }
+
+  /* Responsive Buttons */
+  .ant-btn, .neon-button, button {
+    font-size: 14px !important;
+    padding: 10px 16px !important;
+    height: auto !important;
+    min-height: 48px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem !important;
+  }
+
+  /* Buttons inside tools dashboard cards take full width */
+  .glass-card button, .glass-card .ant-btn, .glass-card .neon-button {
+    width: 100% !important;
+  }
+
+  /* Protect header navigation button widths */
+  .nav-glass .ant-btn, .nav-glass button {
+    width: auto !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    font-size: 12px !important;
+    padding: 0px 16px !important;
+  }
+
+  /* Mobile Typography scaling */
+  h1, .responsive-title {
+    font-size: 2.2rem !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.03em !important;
+    word-break: break-word !important;
+  }
+  h2 {
+    font-size: 1.6rem !important;
+    line-height: 1.2 !important;
+  }
+  h3 {
+    font-size: 1.3rem !important;
+  }
+  p, span, label, .ant-typography {
+    font-size: 13.5px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Grid spacing fixes to prevent horizontal scrolls on mobile */
+  .ant-row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    gap: 16px 0px !important;
+  }
+  .ant-col {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
   }
 }

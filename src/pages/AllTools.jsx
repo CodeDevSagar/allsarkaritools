@@ -108,7 +108,7 @@ const AllTools = () => {
     { title: 'JPG to PDF', icon: <FileImage size={32} className="text-primary" />, desc: 'Convert photos to PDF documents', link: '/jpg-to-pdf', category: 'PDF' },
     { title: 'Form Helper', icon: <Landmark size={32} className="text-secondary" />, desc: 'Official government portal directory', link: '/form-helper', category: 'Documents' },
     { title: 'Office Suite', icon: <FileSpreadsheet size={32} className="text-accent" />, desc: 'View Word, Excel and PPT files', link: '/office-tools', category: 'Office' },
-    { title: 'Universal Converter', icon: <ArrowRightLeft size={32} className="text-primary" />, desc: 'Word, Excel to PDF Conversion', link: '/document-converter', category: 'Office' },
+    { title: 'PDF to Word', icon: <ArrowRightLeft size={32} className="text-primary" />, desc: 'Convert PDF files to editable Word format offline', link: '/document-converter', category: 'Office' },
     { title: 'PDF Security', icon: <Lock size={32} className="text-secondary" />, desc: 'Add password to your PDF files', link: '/pdf-security', category: 'PDF' },
     { title: 'PDF Compressor', icon: <Minimize size={32} className="text-accent" />, desc: 'Reduce PDF size for easy upload', link: '/pdf-compressor', category: 'PDF' },
     { title: 'BG Remover', icon: <Wand2 size={32} className="text-primary" />, desc: 'Remove photo background using on-device AI', link: '/bg-remover', category: 'Images' },
@@ -374,6 +374,44 @@ const AllTools = () => {
               <p className="text-gray-400 leading-relaxed text-base">
                 What does the future hold for AllSarkari Tools? We are committed to building the next generation of smart utilities. As AI models become smaller and more efficient, we are preparing to launch **On-Device OCR (Optical Character Recognition)**, which will allow candidates to scan documents and extract text directly inside their web browser without sending files to the cloud. We are also integrating localized formatting assistants that will automatically detect official guidelines from government exam notification PDFs and format your photos instantly.
               </p>
+            </div>
+
+            <div className="space-y-6 pt-10 border-t border-white/5">
+              <h3 className="text-2xl font-black text-[#00f2ff] tracking-tight uppercase">
+                📖 Comprehensive Directory of AllSarkari Utilities
+              </h3>
+              <p className="text-gray-300 leading-relaxed">
+                To maximize the efficiency of your form-filling tasks, here is a detailed breakdown of each utility sub-category in our catalog:
+              </p>
+              
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-base">1. Image & Photo Resizing Utilities</h4>
+                <p className="text-gray-400 text-sm">
+                  Our image processing engine leverages HTML5 Canvas API and cubic interpolation math to modify photo size parameters without degrading structural image quality. 
+                  Use the <strong>Passport Photo Maker</strong> to format layouts conforming to SSC, UPSC, and IBPS form requirements. The <strong>Image Resizer</strong> allows you to specify a target maximum file size (such as 20KB or 50KB). The <strong>Signature Maker</strong> creates transparent overlays by scrubbing out white background pixels, which helps candidates scan their signatures on digital tablets or upload mobile photos of signed paper sheets.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-base">2. PDF & Document Compiling Tools</h4>
+                <p className="text-gray-400 text-sm">
+                  Merging and securing documents has historically required expensive PDF subscriptions. AllSarkari Tools introduces a client-side binary compiler that lets you merge transcripts, split documents, crop page margins, and insert page numbers locally. The <strong>PDF Security</strong> tool encrypts your files using standard browser cryptography algorithms, preventing others from reading sensitive documents like Aadhaar cards or certificates without authorization.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-base">3. Exam Preparation & Calculators</h4>
+                <p className="text-gray-400 text-sm">
+                  Quick calculations are key when filling recruitment criteria. The <strong>Age Calculator</strong> determines your exact age in years, months, and days relative to the official cutoff dates listed in notifications. The <strong>Salary Slabs Calculator</strong> estimates gross pay, National Pension System (NPS) deductions, and net in-hand salary for UPSC, SSC, and Jeevika grade employees. <strong>Typing Test Pro</strong> allows candidates to practice Hind/English keyboard strokes at SSC-level layouts, complete with a real-time Words Per Minute (WPM) tracker.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-base">4. Developer & SEO Utility Suite</h4>
+                <p className="text-gray-400 text-sm">
+                  For creators and developers, the developer suite helps minify CSS code, format JSON files, and clean nested XML tags. The <strong>SEO Suite</strong> generates search-engine crawler configurations like sitemaps and robots.txt in seconds, ensuring new portals are indexed correctly by search bots.
+                </p>
+              </div>
             </div>
           </div>
 
